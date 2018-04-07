@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MainFrame from './MainFrame.vue'
-import Login from './Login.vue'
-import Posts from './Posts.vue'
+import MainFrame from './MainFrame'
+import Login from './Login'
+import Posts from './Posts'
+import NewPost from './NewPost'
 // import store from '../store'
 
 Vue.use(Router)
@@ -29,6 +30,14 @@ const router = new Router({
           path: 'posts',
           component: Posts,
           name: 'posts',
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: 'newpost',
+          component: NewPost,
+          name: 'newpost',
           meta: {
             requiresAuth: false
           }

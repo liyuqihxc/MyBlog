@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import sidenav from '../components/side-nav'
+import sidenav from '@/components/side-nav'
 import 'element-ui/lib/theme-chalk/display.css'
 
 export default {

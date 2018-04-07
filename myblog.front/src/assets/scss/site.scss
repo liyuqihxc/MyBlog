@@ -3,38 +3,10 @@
 @import 'frontage';
 @import 'blog';
 
-@media (min-width: 1200px)
-{
-    .container {
-        width: 1170px;
-    }
-}
-
-@media (min-width: 992px)
-{
-    .container {
-        width: 970px;
-    }
-}
-
-@media (min-width: 768px)
-{
-    .container {
-        width: 750px;
-    }
-}
-
-.container {
-    display: table;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
 ul.list-unstyled {
     padding-left: 0;
     list-style: none;
+    
     > li {
         margin-bottom: 0.1em;
     }

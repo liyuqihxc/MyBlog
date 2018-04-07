@@ -8,9 +8,7 @@
         <el-col :md="{span:15,offset:4}" :sm="24">
           <el-main class="no-padding">
             <div class="main">
-              <div class="call-out">
-                <el-button @click="onClick">Login</el-button>
-              </div>
+              <div class="call-out"></div>
               <keep-alive>
                 <router-view></router-view>
               </keep-alive>
@@ -26,8 +24,8 @@
 </template>
 
 <script>
-import NavHeader from '../components/nav-header'
-import SiteFooter from '../components/site-footer'
+import NavHeader from '@/components/nav-header'
+import SiteFooter from '@/components/site-footer'
 
 export default {
   name: 'MainFrame',
@@ -44,13 +42,6 @@ export default {
     }
   },
   methods: {
-    onClick () {
-      let _this = this
-      _this.$store.dispatch('login', {
-        userName: 'hxc',
-        password: '19900211'
-      })
-    }
   }
 }
 </script>
