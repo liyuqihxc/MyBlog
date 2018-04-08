@@ -1,23 +1,17 @@
 <template>
   <div class="editor">
       <div class="editor-title">
-          <input type="text" :value="article.title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
+          <input type="text" v-model="title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
       </div>
-      <!--<div class="editor-toolbar">
-        <div class="toolbar-item">
-          <el-dropdown trigger="click">
-            <el-button size="mini" type="text">文件</el-button>
-            <el-dropdown-menu slot="dropdown">
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
-      </div>-->
-      <div class="editor-content">
-        <div class="textarea-wrapper">
-          <div class="content-editable" contenteditable="true">{{deliveryLocation}}</div>
-          <textarea v-model="deliveryLocation" @change="trimSpacesAndUppercase($event, 'deliveryLocation')" class="field-textarea" placeholder="请输入详细地址"></textarea>
-        </div>
-        <textarea :value="article.content"></textarea>
+      <div class="editor-toolbar">
+        <el-button-group>
+          <el-button>预览</el-button>
+          <el-button>保存</el-button>
+        </el-button-group>
+      </div>
+      <div class="editor-content active">
+        <pre><span>{{ content }}</span><br></pre>
+        <textarea v-model="content"></textarea>
       </div>
   </div>
 </template>
@@ -26,10 +20,13 @@
 export default {
   data () {
     return {
-      article: {
-        title: '',
-        content: ''
-      }
+      title: '',
+      content: ''
+    }
+  },
+  watch: {
+    content: function () {
+      return this.content
     }
   }
 }
@@ -70,38 +67,52 @@ input[type=text], textarea {
     padding: 5px 20px 0;
     background: transparent;
     z-index: 200;
-    height: 30px;
-    .toolbar-item {
-      //position: relative;
-      display: inline-block;
-      font-size: 14px;
-      line-height: 18px;
-      padding: 0 10px;
-      text-align: center;
-      border: 1px solid transparent;
-      background: #fff;
-      cursor: pointer;
-      border-radius: 4px 4px;
-      margin-right: 4px;
-      &:hover {
-        border: 1px solid transparent;
-        background: #f5f5f5;
-      }
-    }
   }
   .editor-content {
     padding: 5px 15px;
-    textarea {
-      resize: none;
-      width: 100%;
-      border: none;
+    position: relative;
+    textarea,  pre {
+      margin: 0;
       padding: 0;
-      font-size: 19px;
-      font-weight: normal;
-      &:focus {
-        border: none;
-        outline: none;
+      outline: 0;
+      border: 0;
+      padding: 5px;
+      background: transparent;
+      /* Make the text soft-wrap */
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    &.active {
+      textarea {
+        /* Hide any scrollbars */
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        /* Remove WebKit user-resize widget */
+        resize: none;
       }
+      pre {
+        display: block;
+        /* Hide the text; just using it for sizing */
+        visibility: hidden;
+      }
+    }
+    pre {
+      display: none;
+    }
+    textarea {
+      /* The border-box box model is used to allow
+      * padding whilst still keeping the overall width
+      * at exactly that of the containing element. */
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 100%;
+      /* This height is used when JS is disabled */
+      height: 100px;
     }
   }
 }
