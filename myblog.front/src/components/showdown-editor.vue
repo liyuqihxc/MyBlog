@@ -9,7 +9,7 @@
           <el-button>保存</el-button>
         </el-button-group>
       </div>
-      <div class="editor-content active">
+      <div class="editor-content active" @focus="contentFocus">
         <pre><span>{{ content }}</span><br></pre>
         <textarea v-model="content"></textarea>
       </div>
@@ -30,6 +30,11 @@ export default {
     }
   },
   mounted () {
+  },
+  methods: {
+    contentFocus () {
+
+    }
   }
 }
 </script>
@@ -47,6 +52,9 @@ input[type=text], textarea {
 
 .editor {
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   .editor-title {
     padding: 48px 60px 15px;
     border-bottom: 1px solid #e8e8e8;
@@ -66,13 +74,17 @@ input[type=text], textarea {
     }
   }
   .editor-toolbar {
-    padding: 5px 20px 0;
+    padding: 5px 20px;
     background: transparent;
-    z-index: 200;
+    border-bottom: 1px solid #e8e8e8;
   }
   .editor-content {
     padding: 5px 15px;
     position: relative;
+    bottom: 0;
+    cursor: text;
+    display: flex;
+    height: 100%;
     textarea,  pre {
       margin: 0;
       padding: 0;
@@ -94,11 +106,13 @@ input[type=text], textarea {
         height: 100%;
         /* Remove WebKit user-resize widget */
         resize: none;
+        overflow-y: scroll;
       }
       pre {
         display: block;
         /* Hide the text; just using it for sizing */
         visibility: hidden;
+        overflow: hidden;
       }
     }
     pre {

@@ -1,21 +1,21 @@
 <template>
-  <div class=main-frame>
-    <el-container>
+  <div class="main-frame">
+    <el-container style="height:100%">
       <el-header class="no-padding" style="margin-bottom:20px">
         <nav-header :classes="menu" />
       </el-header>
-      <el-row>
-        <el-col :md="{span:15,offset:4}" :sm="24">
-          <el-main class="no-padding">
+      <el-main class="no-padding" style="height:100%">
+        <el-row type="flex" justify="center" style="height:100%">
+          <el-col :md="15" :sm="24">
             <div class="main">
               <div class="call-out"></div>
               <keep-alive>
                 <router-view></router-view>
               </keep-alive>
             </div>
-          </el-main>
-        </el-col>
-      </el-row>
+          </el-col>
+        </el-row>
+      </el-main>
       <el-footer class="no-padding">
         <site-footer />
       </el-footer>
@@ -47,5 +47,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+.main-frame {
+  height: 100%;
+
+}
 </style>

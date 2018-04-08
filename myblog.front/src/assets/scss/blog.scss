@@ -2,7 +2,11 @@
 	.main{
 		background-color: $background-color;
 		padding: 0;
-		margin-bottom: 20px;
+		margin-bottom: 0;
+		display: flex;
+		flex: none;
+		flex-direction: column;
+		height: 100%;
 				
 		.call-out{
 			background-color: $deep-blue;

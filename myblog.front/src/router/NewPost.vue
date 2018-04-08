@@ -17,3 +17,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.content-editor {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+}
+</style>
