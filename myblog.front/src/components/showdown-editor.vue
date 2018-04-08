@@ -28,6 +28,8 @@ export default {
     content: function () {
       return this.content
     }
+  },
+  mounted () {
   }
 }
 </script>
