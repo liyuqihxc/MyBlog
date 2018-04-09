@@ -65,7 +65,6 @@ namespace MyBlog
 
 #if DEBUG
             // Register the Swagger generator, defining one or more Swagger documents
-            // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

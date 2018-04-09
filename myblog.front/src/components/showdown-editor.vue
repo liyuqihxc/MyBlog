@@ -1,40 +1,53 @@
 <template>
   <div class="editor">
-      <div class="editor-title">
-          <input type="text" v-model="title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
-      </div>
-      <div class="editor-toolbar">
-        <el-button-group>
-          <el-button>预览</el-button>
-          <el-button>保存</el-button>
-        </el-button-group>
-      </div>
-      <div class="editor-content active" @focus="contentFocus">
-        <pre><span>{{ content }}</span><br></pre>
-        <textarea v-model="content"></textarea>
-      </div>
+    <div class="editor-title">
+        <input type="text" v-model="article.title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
+    </div>
+    <div class="editor-toolbar">
+      <el-button-group>
+        <el-button><fa-icon :icon="['far','file-alt']"/>&nbsp;预览</el-button>
+        <el-button><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
+      </el-button-group>
+      <el-button-group>
+        <el-button><fa-icon :icon="['far','paper-plane']"/>&nbsp;发布</el-button>
+      </el-button-group>
+      <el-dropdown style="float:right">
+        <el-button>
+          &nbsp;&nbsp;帮助&nbsp;&nbsp;<i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item><fa-icon :icon="['fas','code']"/>&nbsp;MarkDown</el-dropdown-item>
+          <el-dropdown-item>&nbsp;<fa-icon :icon="['far','lightbulb']"/>&nbsp;&nbsp;LaTeX</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+    <div class="editor-content active">
+      <pre><span>{{ article.content }}</span><br></pre>
+      <textarea v-model="article.content"></textarea>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+  },
   data () {
     return {
-      title: '',
-      content: ''
+      article: {
+        title: '',
+        content: ''
+      }
     }
   },
   watch: {
     content: function () {
-      return this.content
+      return this.article.content
     }
   },
   mounted () {
   },
   methods: {
-    contentFocus () {
-
-    }
   }
 }
 </script>
@@ -74,9 +87,13 @@ input[type=text], textarea {
     }
   }
   .editor-toolbar {
-    padding: 5px 20px;
+    padding: 5px 50px;
     background: transparent;
     border-bottom: 1px solid #e8e8e8;
+    .el-button {
+      padding: 7px;
+    }
+
   }
   .editor-content {
     padding: 5px 15px;
