@@ -5,8 +5,8 @@ namespace MyBlog.DataAccess.Models
 {
     public partial class TagModel
     {
-        public long ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
-        public ICollection<PostModel> Posts { get; set; }
+        public ICollection<TagRelationModel> TagRelations { get; set; }
     }
 }

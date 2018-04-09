@@ -17,7 +17,7 @@ namespace MyBlog.DataAccess
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
-            // 要先dotnet ef migrations add InitialMigration
+            // 要先dotnet ef migrations add InitialMigration -o DataAccess/Migrations
             // 否则没有Migrations无法执行dotnet ef database update
         }
 
@@ -30,16 +30,17 @@ namespace MyBlog.DataAccess
                 m.HasIndex(u => u.ID).IsUnique();
 
                 m.Property(u => u.Name)
+                    .IsRequired()
                     .HasMaxLength(15);
                 m.HasIndex(u => u.Name).IsUnique();
+                
 
                 m.Property(u => u.NickName)
                     .HasMaxLength(50);
 
-                m.HasMany(p => p.Posts)
-                    .WithOne(u => u.Announcer)
-                    .HasForeignKey(p => p.AnnouncerID)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                m.Property(u => u.Password)
+                    .IsRequired()
+                    .HasMaxLength(128 / 8);
             });
 
             modelBuilder.Entity<CategoryModel>((m) =>
@@ -49,13 +50,9 @@ namespace MyBlog.DataAccess
                 m.HasIndex(c => c.ID).IsUnique();
 
                 m.Property(c => c.Name)
+                    .IsRequired()
                     .HasMaxLength(10);
                 m.HasIndex(c => c.Name).IsUnique();
-
-                m.HasMany(p => p.Posts)
-                    .WithOne(p => p.Category)
-                    .HasForeignKey(p => p.CategoryID)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<TagModel>((m) =>
@@ -65,10 +62,26 @@ namespace MyBlog.DataAccess
                 m.HasIndex(t => t.ID).IsUnique();
 
                 m.Property(t => t.Name)
+                    .IsRequired()
                     .HasMaxLength(10);
                 m.HasIndex(t => t.Name).IsUnique();
+            });
 
-                m.HasMany(p => p.Posts);
+            modelBuilder.Entity<TagRelationModel>((m) =>
+            {
+                m.HasKey(tr => tr.ID);
+                m.Property(tr => tr.ID).ValueGeneratedOnAdd();
+                m.HasIndex(tr => tr.ID);
+
+                m.HasOne(tr => tr.Post)
+                    .WithMany(p => p.TagRelations)
+                    .HasForeignKey(tr => tr.PostID)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                m.HasOne(tr => tr.Tag)
+                    .WithMany(t => t.TagRelations)
+                    .HasForeignKey(tr => tr.TagID)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<PostModel>((m) =>
@@ -78,6 +91,7 @@ namespace MyBlog.DataAccess
                 m.HasIndex(p => p.ID).IsUnique();
 
                 m.Property(p => p.Title)
+                    .IsRequired()
                     .HasMaxLength(128);
                 
                 m.HasOne(p => p.Announcer)
@@ -89,8 +103,6 @@ namespace MyBlog.DataAccess
                     .WithMany(c => c.Posts)
                     .HasForeignKey(p => p.CategoryID)
                     .OnDelete(DeleteBehavior.ClientSetNull);
-
-                m.HasMany(p => p.Tags);
             });
         }
     }

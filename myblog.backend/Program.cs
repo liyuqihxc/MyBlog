@@ -23,7 +23,7 @@ namespace MyBlog
                 try
                 {
                     var context = services.GetRequiredService<DataAccess.BlogDbContext>();
-                    //DataAccess.DbInitializer.Initialize(context);
+                    DataAccess.DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
@@ -41,7 +41,11 @@ namespace MyBlog
                 .UseUrls("http://localhost:18089")
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .ConfigureAppConfiguration((hostContext, config) => config.AddUserSecrets("Token.IssuerSigningKey"))
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                        config.AddUserSecrets("Token.IssuerSigningKey");
+                })
                 .Build();
         }
     }

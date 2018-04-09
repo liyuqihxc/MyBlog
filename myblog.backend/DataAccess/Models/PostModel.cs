@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MyBlog.DataAccess.Models
 {
-    public partial class PostModel
+    public class PostModel
     {
         public int ID { get; set; }
         public string Title { get; set; }
@@ -17,6 +17,6 @@ namespace MyBlog.DataAccess.Models
         public int CategoryID { get; set; }
         public CategoryModel Category { get; set; }
 
-        public ICollection<TagModel> Tags { get; set; }
+        public ICollection<TagRelationModel> TagRelations { get; set; }
     }
 }

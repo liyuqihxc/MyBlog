@@ -17,6 +17,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using System.Reflection;
 
 namespace MyBlog
 {
@@ -44,24 +45,23 @@ namespace MyBlog
                     .Build();
             });
 
-            services.AddAuthentication(o =>
-            {
-                o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Audience = Configuration["Token:Audience"];
-                options.ClaimsIssuer = Configuration["Token:Issuer"];
-                options.TokenValidationParameters = new TokenValidationParameters
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Token:Issuer"],
-                    ValidAudience = Configuration["Token:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Guid.Parse(Configuration["Token:IssuerSigningKey"]).ToByteArray())
-                };
-                options.SaveToken = true;
-            });
+                    options.Audience = Configuration["Token:Audience"];
+                    options.ClaimsIssuer = Configuration["Token:Issuer"];
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Token:Issuer"],
+                        ValidAudience = Configuration["Token:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Guid.Parse(Configuration["Token.IssuerSigningKey"]).ToByteArray())
+                    };
+                    options.SaveToken = true;
+                });
 
 #if DEBUG
             // Register the Swagger generator, defining one or more Swagger documents
@@ -81,11 +81,25 @@ namespace MyBlog
             });
 #endif
 
+            services.AddAutofac();
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            //builder.RegisterType<MyType>().As<IMyType>();
+            builder.RegisterType<BlogDbContext>().InstancePerDependency();
+            RegisterRepository(builder);
             this.ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(this.ApplicationContainer);
+        }
+
+        private void RegisterRepository(ContainerBuilder builder)
+        {
+            Assembly self = GetType().Assembly;
+            Type[] AllTypes = self.GetTypes();
+            var interfaces = AllTypes.Where(t => t.IsInterface && t.FullName.Contains("MyBlog.IRepository"));
+            foreach (var i in interfaces)
+            {
+                var repo = AllTypes.FirstOrDefault(t => t.GetInterfaces().Contains(i));
+                builder.RegisterType(repo).As(i);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

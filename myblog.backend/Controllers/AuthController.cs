@@ -10,44 +10,50 @@ using System.Security.Claims;
 using MyBlog.DataAccess;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using MyBlog.IRepository;
 
 namespace MyBlog.Controllers
 {
     [Route("api/[controller]"), Authorize]
     public class AuthController : Controller
     {
-        private IConfiguration Configuration { get; }
+        private IConfiguration _Configuration { get; }
+        private IUserRepository _UserRepository { get; }
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, IUserRepository userRepository)
         {
-            Configuration = configuration;
+            _Configuration = configuration;
+            _UserRepository = userRepository;
         }
 
         // GET: api/auth/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
+            var user = await _UserRepository.Verify(username, password);
+            if (user == null)
+                return BadRequest("用户不存在。");
+
             IEnumerable<Claim> claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.GivenName, "Nitya Prakash Sharma")
+                new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+                new Claim(JwtRegisteredClaimNames.Jti, user.SecurityStamp),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.NickName)
             };
 
-            var key = new SymmetricSecurityKey(Guid.Parse(Configuration["Token:IssuerSigningKey"]).ToByteArray());
+            var key = new SymmetricSecurityKey(Guid.Parse(_Configuration["Token:IssuerSigningKey"]).ToByteArray());
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: Configuration["Token:Issuer"],
-                audience: Configuration["Token:Audience"],
+                issuer: _Configuration["Token:Issuer"],
+                audience: _Configuration["Token:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddDays(5),
                 signingCredentials: creds
             );
 
             return Ok(new { access_token = new JwtSecurityTokenHandler().WriteToken(token), expires_on = DateTime.Now.AddDays(5) });
-            //return BadRequest("Could not create token");
         }
 
         [HttpPost("signup")]
