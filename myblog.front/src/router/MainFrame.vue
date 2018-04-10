@@ -9,9 +9,7 @@
           <el-col :md="15" :sm="24">
             <div class="main">
               <div class="call-out"></div>
-              <keep-alive>
-                <router-view></router-view>
-              </keep-alive>
+              <router-view></router-view>
             </div>
           </el-col>
         </el-row>

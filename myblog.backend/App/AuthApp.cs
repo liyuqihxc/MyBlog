@@ -23,9 +23,9 @@ namespace MyBlog.App
             return await _UserRepository.FirstOrDefault(u => u.Name == username && u.Password == Utility.Md5Hash(password));
         }
 
-        public async Task ResetUserSecurityStamp()
+        public Task ResetUserSecurityStamp()
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

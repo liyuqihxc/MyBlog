@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import MainFrame from './MainFrame'
 import Login from './Login'
 import Posts from './Posts'
+import PostsAll from './PostsAll'
+import PostsByTag from './PostsByTag'
+import PostsByCat from './PostsByCat'
 import NewPost from './NewPost'
 // import store from '../store'
 
@@ -30,6 +33,28 @@ const router = new Router({
           path: 'posts',
           component: Posts,
           name: 'posts',
+          meta: {
+            requiresAuth: false
+          },
+          children: [
+            {
+              path: '',
+              component: PostsAll
+            },
+            {
+              path: 'tag/:tagname',
+              component: PostsByTag
+            },
+            {
+              path: 'category/:catname',
+              component: PostsByCat
+            }
+          ]
+        },
+        {
+          path: 'post/:postid',
+          component: Posts,
+          name: 'post',
           meta: {
             requiresAuth: false
           }

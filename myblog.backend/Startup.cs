@@ -13,12 +13,12 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using MyBlog.DataAccess;
-using MyBlog.StartupConfigure;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using System.Reflection;
+using AutoMapper;
 
 namespace MyBlog
 {
@@ -81,6 +81,9 @@ namespace MyBlog
                 c.IncludeXmlComments(xmlPath);
             });
 #endif
+
+            services.AddAutoMapper();
+            Mapper.Initialize(cfg => cfg.AddProfile<ViewModels.AutoMapperProfile>());
 
             services.AddAutofac();
 
