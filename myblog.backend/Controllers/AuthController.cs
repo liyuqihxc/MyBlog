@@ -11,6 +11,7 @@ using MyBlog.DataAccess;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using MyBlog.IRepository;
+using MyBlog.App;
 
 namespace MyBlog.Controllers
 {
@@ -18,12 +19,12 @@ namespace MyBlog.Controllers
     public class AuthController : Controller
     {
         private IConfiguration _Configuration { get; }
-        private IUserRepository _UserRepository { get; }
+        private AuthApp _AuthApp { get; }
 
-        public AuthController(IConfiguration configuration, IUserRepository userRepository)
+        public AuthController(IConfiguration configuration, AuthApp authApp)
         {
             _Configuration = configuration;
-            _UserRepository = userRepository;
+            _AuthApp = authApp;
         }
 
         // GET: api/auth/login
@@ -31,7 +32,7 @@ namespace MyBlog.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string username, string password)
         {
-            var user = await _UserRepository.Verify(username, password);
+            var user = await _AuthApp.Verify(username, password);
             if (user == null)
                 return BadRequest("用户不存在。");
 
@@ -42,7 +43,7 @@ namespace MyBlog.Controllers
                 new Claim(JwtRegisteredClaimNames.GivenName, user.NickName)
             };
 
-            var key = new SymmetricSecurityKey(Guid.Parse(_Configuration["Token:IssuerSigningKey"]).ToByteArray());
+            var key = new SymmetricSecurityKey(Guid.Parse(_Configuration["Token.IssuerSigningKey"]).ToByteArray());
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

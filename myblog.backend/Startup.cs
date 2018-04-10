@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using MyBlog.DataAccess;
+using MyBlog.StartupConfigure;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Autofac.Extensions.DependencyInjection;
@@ -82,24 +83,17 @@ namespace MyBlog
 #endif
 
             services.AddAutofac();
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
             builder.RegisterType<BlogDbContext>().InstancePerDependency();
-            RegisterRepository(builder);
-            this.ApplicationContainer = builder.Build();
-            return new AutofacServiceProvider(this.ApplicationContainer);
-        }
 
-        private void RegisterRepository(ContainerBuilder builder)
-        {
-            Assembly self = GetType().Assembly;
-            Type[] AllTypes = self.GetTypes();
-            var interfaces = AllTypes.Where(t => t.IsInterface && t.FullName.Contains("MyBlog.IRepository"));
-            foreach (var i in interfaces)
-            {
-                var repo = AllTypes.FirstOrDefault(t => t.GetInterfaces().Contains(i));
-                builder.RegisterType(repo).As(i);
-            }
+            Assembly self = this.GetType().Assembly;
+            builder.RegisterAssemblyTypes(self).Where(t => t.Name.EndsWith("Repository")).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(self).Where(t => t.FullName.StartsWith("MyBlog.App")).AsImplementedInterfaces();
+
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

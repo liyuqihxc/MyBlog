@@ -4,12 +4,8 @@ using MyBlog.DataAccess.Models;
 
 namespace MyBlog.IRepository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<UserModel>
     {
-        bool UserExists(string username);
-
-        Task<UserModel> Verify(string username, string password);
-
-        Task Create(UserModel NewUser);
+        
     }
 }

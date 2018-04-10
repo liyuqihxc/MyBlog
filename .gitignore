@@ -9,7 +9,7 @@ yarn-error.log*
 selenium-debug.log
 bin/
 obj/
-.sqlite
+*.sqlite
 Migrations/
 
 # Editor directories and files
