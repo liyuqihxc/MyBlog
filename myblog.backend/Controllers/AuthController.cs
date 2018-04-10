@@ -62,5 +62,11 @@ namespace MyBlog.Controllers
         {
             return Ok();
         }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            
+        }
     }
 }
