@@ -13,27 +13,27 @@ namespace MyBlog.Controllers
     [Route("api/[controller]"), AllowAnonymous]
     public class ArticlesController
     {
-        private IMapper _Mapper { get; }
         private ArticlesApp _ArticlesApp { get; }
 
-        public ArticlesController(IMapper mapper)
+        public ArticlesController(ArticlesApp articlesApp)
         {
-            _Mapper = mapper;
+            _ArticlesApp = articlesApp;
         }
 
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticles(int page)
+        [HttpGet, Route("list")]
+        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewAllArticles(int page, int count)
+        {
+            return _ArticlesApp.PreviewAllArticles(page, count);
+        }
+
+        [HttpGet, Route("previewbycat")]
+        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticlesByCategory(string category, int page, int count)
         {
             throw new NotImplementedException();
         }
 
-        [Route("previewbycat/{category}/{page}")]
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticlesByCategory(string category, int page)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Route("previewbytag")]
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticlesByTag(string tag, int page)
+        [HttpGet, Route("previewbytag")]
+        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticlesByTag(string tag, int page, int count)
         {
             throw new NotImplementedException();
         }

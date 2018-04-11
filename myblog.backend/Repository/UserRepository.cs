@@ -16,28 +16,19 @@ namespace MyBlog.Repository
             
         }
 
-        public override Task<UserModel> FirstOrDefault(Expression<Func<UserModel, bool>> predicate)
+        public override UserModel FirstOrDefault(Expression<Func<UserModel, bool>> predicate)
         {
-            return Task<UserModel>.Factory.StartNew(() =>
-            {
-                return _DbContext.Users.FirstOrDefault(predicate);
-            });
+            return _DbContext.Users.FirstOrDefault(predicate);
         }
 
-        public override Task<UserModel> First(Expression<Func<UserModel, bool>> predicate)
+        public override UserModel First(Expression<Func<UserModel, bool>> predicate)
         {
-            return Task<UserModel>.Factory.StartNew(() =>
-            {
-                return _DbContext.Users.First(predicate);
-            });
+            return _DbContext.Users.First(predicate);
         }
 
-        public override Task<IEnumerable<UserModel>> Where(Expression<Func<UserModel, bool>> predicate)
+        public override IQueryable<UserModel> Where(Expression<Func<UserModel, bool>> predicate)
         {
-            return Task<IEnumerable<UserModel>>.Factory.StartNew(() =>
-            {
-                return _DbContext.Users.Where(predicate);
-            });
+            return _DbContext.Users.Where(predicate);
         }
     }
 }

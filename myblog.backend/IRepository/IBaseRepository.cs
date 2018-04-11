@@ -9,24 +9,26 @@ namespace MyBlog.IRepository
     public interface IBaseRepository<T>
         where T : class
     {
-        Task Add(T t);
+        void Add(T t);
 
-        Task<bool> Any(object key);
+        bool Any(object key);
 
-        Task<T> Find(object key);
+        IQueryable<T> All();
 
-        Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate);
+        T Find(object key);
 
-        Task<T> First(Expression<Func<T, bool>> predicate);
+        T FirstOrDefault(Expression<Func<T, bool>> predicate);
 
-        Task<IEnumerable<T>> Where(Expression<Func<T, bool>> predicate);
+        T First(Expression<Func<T, bool>> predicate);
 
-        Task Remove(T t);
+        IQueryable<T> Where(Expression<Func<T, bool>> predicate);
 
-        Task RemoveRange(IEnumerable<T> t);
+        void Remove(T t);
 
-        Task Update(T t);
+        void RemoveRange(IEnumerable<T> t);
 
-        Task UpdateRange(IEnumerable<T> t);
+        void Update(T t);
+
+        void UpdateRange(IEnumerable<T> t);
     }
 }

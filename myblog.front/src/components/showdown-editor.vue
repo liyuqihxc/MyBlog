@@ -8,6 +8,22 @@
         <el-button><fa-icon :icon="['far','file-alt']"/>&nbsp;预览</el-button>
         <el-button><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
       </el-button-group>
+      <el-select v-model="article.category" size="small" placeholder="请选择分类">
+        <el-option
+          v-for="item in categories"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key">
+        </el-option>
+      </el-select>
+      <el-select multiple filterable remote reserve-keyword multiple-limit="3" :remote-method="filterTags" v-model="article.tags" size="small" placeholder="请选择标签">
+        <el-option
+          v-for="item in tags"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key">
+        </el-option>
+      </el-select>
       <el-button-group>
         <el-button><fa-icon :icon="['far','paper-plane']"/>&nbsp;发布</el-button>
       </el-button-group>
@@ -30,13 +46,21 @@
 
 <script>
 export default {
-  props: {
-  },
+  props: [
+    'title',
+    'content',
+    'selectedTags',
+    'tags',
+    'selectedCategory',
+    'categories'
+  ],
   data () {
     return {
       article: {
-        title: '',
-        content: ''
+        title: this.title || '',
+        content: this.content || '',
+        tags: this.selectedTags || [],
+        category: this.selectedCategory || -1
       }
     }
   },
@@ -48,6 +72,11 @@ export default {
   mounted () {
   },
   methods: {
+    riseSaveEvent () {
+      this.$emit('save', this.article)
+    },
+    filterTags (query) {
+    }
   }
 }
 </script>

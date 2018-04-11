@@ -82,8 +82,10 @@ namespace MyBlog
             });
 #endif
 
-            services.AddAutoMapper();
-            Mapper.Initialize(cfg => cfg.AddProfile<ViewModels.AutoMapperProfile>());
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<ViewModels.AutoMapperProfile>();
+            });
 
             services.AddAutofac();
 
@@ -91,9 +93,9 @@ namespace MyBlog
             builder.Populate(services);
             builder.RegisterType<BlogDbContext>().InstancePerDependency();
 
-            Assembly self = this.GetType().Assembly;
-            builder.RegisterAssemblyTypes(self).Where(t => t.Name.EndsWith("Repository")).AsImplementedInterfaces();
-            builder.RegisterAssemblyTypes(self).Where(t => t.FullName.StartsWith("MyBlog.App")).AsImplementedInterfaces();
+            Assembly self = GetType().Assembly;
+            builder.RegisterAssemblyTypes(self).Where(t => !t.IsGenericType && t.FullName.StartsWith("MyBlog.Repository.")).AsImplementedInterfaces();
+            builder.RegisterTypes(self.ExportedTypes.Where(t => t.FullName.StartsWith("MyBlog.App.") && !t.IsGenericType).ToArray());
 
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);

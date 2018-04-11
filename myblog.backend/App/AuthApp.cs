@@ -18,9 +18,12 @@ namespace MyBlog.App
             _UserRepository = userRepository;
         }
 
-        public async Task<UserModel> Verify(string username, string password)
+        public Task<UserModel> Verify(string username, string password)
         {
-            return await _UserRepository.FirstOrDefault(u => u.Name == username && u.Password == Utility.Md5Hash(password));
+            return Task<UserModel>.Factory.StartNew(() => 
+            {
+                return _UserRepository.FirstOrDefault(u => u.Name == username && u.Password == Utility.Md5Hash(password));
+            });
         }
 
         public Task ResetUserSecurityStamp()

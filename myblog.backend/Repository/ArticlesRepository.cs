@@ -16,12 +16,14 @@ namespace MyBlog.Repository
 
         }
 
-        public override Task<IEnumerable<PostModel>> Where(Expression<Func<PostModel, bool>> predicate)
+        public override IQueryable<PostModel> All()
         {
-            return Task<IEnumerable<PostModel>>.Factory.StartNew(() =>
-            {
-                return _DbContext.Posts.Where(predicate);
-            });
+            return _DbContext.Posts;
+        }
+
+        public override IQueryable<PostModel> Where(Expression<Func<PostModel, bool>> predicate)
+        {
+            return _DbContext.Posts.Where(predicate);
         }
     }
 }

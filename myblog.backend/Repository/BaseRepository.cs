@@ -18,58 +18,63 @@ namespace MyBlog.Repository
             _DbContext = dbc;
         }
 
-        public async Task Add(T t)
+        public void Add(T t)
         {
-            await _DbContext.AddAsync<T>(t);
-            await _DbContext.SaveChangesAsync();
+            _DbContext.Add<T>(t);
+            _DbContext.SaveChanges();
         }
 
-        public async Task<bool> Any(object key)
+        public bool Any(object key)
         {
-            var obj = await _DbContext.FindAsync<T>(key);
+            var obj = _DbContext.Find<T>(key);
             return obj != null;
         }
 
-        public async Task<T> Find(object key)
+        public T Find(object key)
         {
-            return await _DbContext.FindAsync<T>(key);
+            return _DbContext.Find<T>(key);
         }
 
-        public async Task Remove(T t)
+        public void Remove(T t)
         {
             _DbContext.Remove<T>(t);
-            await _DbContext.SaveChangesAsync();
+            _DbContext.SaveChanges();
         }
 
-        public async Task RemoveRange(IEnumerable<T> t)
+        public void RemoveRange(IEnumerable<T> t)
         {
             _DbContext.RemoveRange(t);
-            await _DbContext.SaveChangesAsync();
+            _DbContext.SaveChanges();
         }
 
-        public async Task Update(T t)
+        public void Update(T t)
         {
             _DbContext.Update<T>(t);
-            await _DbContext.SaveChangesAsync();
+            _DbContext.SaveChanges();
         }
 
-        public async Task UpdateRange(IEnumerable<T> t)
+        public void UpdateRange(IEnumerable<T> t)
         {
             _DbContext.UpdateRange(t);
-            await _DbContext.SaveChangesAsync();
+            _DbContext.SaveChanges();
         }
 
-        public virtual Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        public virtual IQueryable<T> All()
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<T> First(Expression<Func<T, bool>> predicate)
+        public virtual T FirstOrDefault(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public virtual Task<IEnumerable<T>> Where(Expression<Func<T, bool>> predicate)
+        public virtual T First(Expression<Func<T, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IQueryable<T> Where(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,5 @@
 import * as muta from '../mutation-types'
-import auth from '@/api/auth'
+import auth from '@/api/authApi'
 
 const actions = {
   async login ({ commit, state }, loginModel) {
@@ -16,8 +16,7 @@ const mutations = {
 
 const authentication = {
   state: {
-    logined: false, // 登录后状态为true
-    unRead: 0
+    logined: false// 登录后状态为true
   },
   actions,
   mutations

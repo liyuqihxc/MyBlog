@@ -32,14 +32,14 @@ const router = new Router({
         {
           path: 'posts',
           component: Posts,
-          name: 'posts',
           meta: {
             requiresAuth: false
           },
           children: [
             {
               path: '',
-              component: PostsAll
+              component: PostsAll,
+              name: 'posts'
             },
             {
               path: 'tag/:tagname',

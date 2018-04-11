@@ -1,22 +1,20 @@
 <template>
   <div class="article-list">
-    <!-- eslint-disable-next-line -->
-    <div class="post" v-for="article in props.articles">
-      <h1><router-link to="{path:'/post',query:{postid:article.id}}"></router-link></h1>
-      <p class="post-date">{{ article.createdate }}&nbsp;-&nbsp;{{ article.Announcer }}</p>
+    <div class="post" v-for="(article,ia) in articles" :key="ia">
+      <h1><router-link :to="{path:'/post',query:{postid:article.id}}">{{ article.title }}</router-link></h1>
+      <p class="post-date">{{ article.createDate }}&nbsp;-&nbsp;{{ article.announcer }}</p>
       <div class="tags">
         <fa-icon :icon="['fas','tags']"></fa-icon>
-        <!-- eslint-disable-next-line -->
-        <router-link v-for="tag in article.tags">
+        <router-link v-for="(tag,it) in article.tags" :key="it" :to="{path:'/'}">
           <span class="tag padded-sm img-rounded margin-sm-right">{{ tag }}</span>
         </router-link>
-	    </div>
+      </div>
       <div class="clearfix">
         <img src="" class="pull-left margin-right">
-        <div v-html="convertMakrdown(article.content)"></div>
+        <div> {{ convertMakrdown(article.content) }}</div>
       </div>
-      <div class="continue-reading clearfix pull-right">
-        <el-button type="primary"><router-link to="{path:'/post',query:{postid:article.id}}" style="color:write;">Read More</router-link></el-button>
+      <div class="continue-reading clearfix">
+        <el-button class="pull-right" type="primary"><router-link :to="{path:'/post',query:{postid:article.id}}" style="color:write;">Read More</router-link></el-button>
       </div>
     </div>
   </div>
@@ -24,14 +22,17 @@
 
 <script>
 import showdown from 'showdown'
+const Converter = new showdown.Converter()
 
 export default {
   props: [
     'articles',
+    'loading',
+    'totalPage'
   ],
   methods: {
     convertMakrdown (str) {
-      return str
+      return Converter.makeHtml(str).replace(/<[^>]+>/g, '')
     }
   }
 }
