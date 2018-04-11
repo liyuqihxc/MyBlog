@@ -9,7 +9,7 @@ using MyBlog.IRepository;
 
 namespace MyBlog.Repository
 {
-    public class UserRepository : BaseRepository<UserModel>, IUserRepository
+    public class UserRepository : BaseRepository<UserModel>
     {
         public UserRepository(BlogDbContext dbc) : base(dbc)
         {

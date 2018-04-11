@@ -11,9 +11,9 @@ namespace MyBlog.App
 {
     public class AuthApp
     {
-        private IUserRepository _UserRepository { get; }
+        private IBaseRepository<UserModel> _UserRepository { get; }
         
-        public AuthApp(IUserRepository userRepository)
+        public AuthApp(IBaseRepository<UserModel> userRepository)
         {
             _UserRepository = userRepository;
         }

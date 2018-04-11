@@ -9,7 +9,7 @@ using MyBlog.IRepository;
 
 namespace MyBlog.Repository
 {
-    public class TagsRepository : BaseRepository<TagModel>, ITagsRepository
+    public class TagsRepository : BaseRepository<TagModel>
     {
         public TagsRepository(BlogDbContext dbc) : base(dbc)
         {

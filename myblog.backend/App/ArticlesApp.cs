@@ -14,11 +14,11 @@ namespace MyBlog.App
     public class ArticlesApp
     {
         private IMapper _Mapper { get; }
-        private IArticlesRepository _ArticlesRepository { get; }
-        private ITagsRepository _TagsRepository { get; }
-        private ICategoriesRepository _CategoriesRepository { get; }
+        private IBaseRepository<PostModel> _ArticlesRepository { get; }
+        private IBaseRepository<TagModel> _TagsRepository { get; }
+        private IBaseRepository<CategoryModel> _CategoriesRepository { get; }
 
-        public ArticlesApp(IMapper mapper, IArticlesRepository articlesRepository, ITagsRepository tagsRepository, ICategoriesRepository categoriesRepository)
+        public ArticlesApp(IMapper mapper, IBaseRepository<PostModel> articlesRepository, IBaseRepository<TagModel> tagsRepository, IBaseRepository<CategoryModel> categoriesRepository)
         {
             _Mapper = mapper;
             _ArticlesRepository = articlesRepository;

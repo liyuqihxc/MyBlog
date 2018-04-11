@@ -9,7 +9,7 @@ using MyBlog.IRepository;
 
 namespace MyBlog.Repository
 {
-    public class CategoriesRepository : BaseRepository<CategoryModel>, ICategoriesRepository
+    public class CategoriesRepository : BaseRepository<CategoryModel>
     {
         public CategoriesRepository(BlogDbContext dbc) : base(dbc)
         {
