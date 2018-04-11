@@ -42,11 +42,11 @@ const router = new Router({
               name: 'posts'
             },
             {
-              path: 'tag/:tagname',
+              path: 'tags/:tagname',
               component: PostsByTag
             },
             {
-              path: 'category/:catname',
+              path: 'categories/:catname',
               component: PostsByCat
             }
           ]

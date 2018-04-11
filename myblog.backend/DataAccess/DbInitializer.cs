@@ -23,10 +23,31 @@ namespace MyBlog.DataAccess
                     SecurityStamp = Utility.GenerateSecurityStamp()
                 };
                 context.Users.Add(user);
+
+                context.Categories.Add(new CategoryModel
+                {
+                    Name = "电子技术"
+                });
+                context.Categories.Add(new CategoryModel
+                {
+                    Name = "软件技术"
+                });
+                context.Categories.Add(new CategoryModel
+                {
+                    Name = "操作系统"
+                });
+
+                context.Tags.Add(new TagModel
+                {
+                    Name = "CPP"
+                });
+                context.Tags.Add(new TagModel
+                {
+                    Name = "DotNet"
+                });
+
                 context.SaveChanges();
             }
-
-            context.SaveChanges();
         }
     }
 }

@@ -4,7 +4,7 @@
 
 <script>
 import postList from '@/components/post-list'
-import * as types from '@/store/mutation-types'
+import * as muta from '@/store/mutation-types'
 import { mapState } from 'vuex'
 
 export default {
@@ -29,7 +29,7 @@ export default {
       let _this = this
       _this.currentPage = page || _this.currentPage
       _this.loading = true
-      _this.$store.dispatch(types.AC_ARTICLES_FETCH_ALL, {
+      _this.$store.dispatch(muta.AC_ARTICLES_FETCH_ALL, {
         page: _this.currentPage,
         count: 10
       }).then(function () {

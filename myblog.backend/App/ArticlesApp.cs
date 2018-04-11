@@ -13,12 +13,17 @@ namespace MyBlog.App
 {
     public class ArticlesApp
     {
-        private IMapper _Mapper { get; set; }
-        private IArticlesRepository _ArticlesRepository { get; set; }
-        public ArticlesApp(IMapper mapper, IArticlesRepository articlesRepository)
+        private IMapper _Mapper { get; }
+        private IArticlesRepository _ArticlesRepository { get; }
+        private ITagsRepository _TagsRepository { get; }
+        private ICategoriesRepository _CategoriesRepository { get; }
+
+        public ArticlesApp(IMapper mapper, IArticlesRepository articlesRepository, ITagsRepository tagsRepository, ICategoriesRepository categoriesRepository)
         {
             _Mapper = mapper;
             _ArticlesRepository = articlesRepository;
+            _TagsRepository = tagsRepository;
+            _CategoriesRepository = categoriesRepository;
         }
 
         public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewAllArticles(int page, int count)
@@ -38,6 +43,22 @@ namespace MyBlog.App
                     CurrentPage = page,
                     Data = _Mapper.Map<IEnumerable<ArticlePreviewVM>>(result)
                 };
+            });
+        }
+
+        public Task<IEnumerable<CategoryModel>> GetAllCategories()
+        {
+            return Task<IEnumerable<CategoryModel>>.Factory.StartNew(() =>
+            {
+                return _CategoriesRepository.All().ToArray();
+            });
+        }
+
+        public Task<IEnumerable<TagModel>> GetAllTags()
+        {
+            return Task<IEnumerable<TagModel>>.Factory.StartNew(() =>
+            {
+                return _TagsRepository.All().ToArray();
             });
         }
     }

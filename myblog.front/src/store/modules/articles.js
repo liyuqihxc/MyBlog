@@ -9,7 +9,7 @@ const actions = {
   async [muta.AC_ARTICLES_FETCH_TAGS_CATEGORIES] ({ commit, state }) {
     let payloadTags = await articlesApi.loadTags()
     let payloadCats = await articlesApi.loadCategories()
-    commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, payloadTags, payloadCats)
+    commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, { payloadTags, payloadCats })
   }
 }
 
@@ -18,7 +18,7 @@ const mutations = {
     state.articlePaging.list = payload.data
     state.articlePaging.totalPage = payload.totalPage
   },
-  [muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES] (state, payloadTags, payloadCats) {
+  [muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES] (state, { payloadTags, payloadCats }) {
     state.allTags = payloadTags
     state.allCategories = payloadCats
   }

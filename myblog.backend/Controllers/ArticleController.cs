@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlog.App;
+using MyBlog.DataAccess.Models;
 using MyBlog.ViewModels;
 
 namespace MyBlog.Controllers
@@ -37,5 +38,11 @@ namespace MyBlog.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpGet, Route("allcategories")]
+        public Task<IEnumerable<CategoryModel>> GetAllCategories() => _ArticlesApp.GetAllCategories();
+
+        [HttpGet, Route("alltags")]
+        public Task<IEnumerable<TagModel>> GetAllTags() => _ArticlesApp.GetAllTags();
     }
 }

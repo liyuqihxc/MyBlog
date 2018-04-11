@@ -1,14 +1,15 @@
 <template>
   <div class="editor">
     <div class="editor-title">
-        <input type="text" v-model="article.title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
+        <input type="text" v-model="value.title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
     </div>
     <div class="editor-toolbar">
       <el-button-group>
-        <el-button><fa-icon :icon="['far','file-alt']"/>&nbsp;预览</el-button>
-        <el-button><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
+        <el-button @click="togglePreview" v-if="!preview"><fa-icon :icon="['far','file-alt']"/>&nbsp;预览</el-button>
+        <el-button @click="togglePreview" v-if="preview"><fa-icon :icon="['far','file-alt']"/>&nbsp;编辑</el-button>
+        <el-button @click="riseSaveEvent"><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
       </el-button-group>
-      <el-select v-model="article.category" size="small" placeholder="请选择分类">
+      <el-select v-model="value.category" size="small" placeholder="请选择分类">
         <el-option
           v-for="item in categories"
           :key="item.key"
@@ -16,7 +17,7 @@
           :value="item.key">
         </el-option>
       </el-select>
-      <el-select multiple filterable remote reserve-keyword multiple-limit="3" :remote-method="filterTags" v-model="article.tags" size="small" placeholder="请选择标签">
+      <el-select multiple filterable remote reserve-keyword :multiple-limit="3" :remote-method="filterTags" v-model="value.tags" size="small" placeholder="请选择标签">
         <el-option
           v-for="item in tags"
           :key="item.key"
@@ -32,58 +33,89 @@
           &nbsp;&nbsp;帮助&nbsp;&nbsp;<i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item><fa-icon :icon="['fas','code']"/>&nbsp;MarkDown</el-dropdown-item>
+          <el-dropdown-item><fa-icon :icon="['fas','code']"/>&nbsp;Markdown</el-dropdown-item>
           <el-dropdown-item>&nbsp;<fa-icon :icon="['far','lightbulb']"/>&nbsp;&nbsp;LaTeX</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <div class="editor-content active">
-      <pre><span>{{ article.content }}</span><br></pre>
-      <textarea v-model="article.content"></textarea>
+    <div class="editor-content active" v-show="!preview">
+      <pre><span>{{ value.content }}</span><br></pre>
+      <textarea v-model="value.content"></textarea>
+    </div>
+    <div class="previewer" v-if="preview" v-html="previewContent">
     </div>
   </div>
 </template>
 
 <script>
+import showdown from 'showdown'
+const Converter = new showdown.Converter()
+
 export default {
   props: [
-    'title',
-    'content',
-    'selectedTags',
     'tags',
-    'selectedCategory',
-    'categories'
+    'categories',
+    'value'
   ],
   data () {
     return {
-      article: {
-        title: this.title || '',
-        content: this.content || '',
-        tags: this.selectedTags || [],
-        category: this.selectedCategory || -1
-      }
+      preview: false
+    }
+  },
+  computed: {
+    previewContent: function () {
+      return Converter.makeHtml(this.value.content)
     }
   },
   watch: {
-    content: function () {
-      return this.article.content
+    value: {
+      handler (New, Old) {
+        this.$emit('input', New)
+      },
+      deep: true
     }
-  },
-  mounted () {
   },
   methods: {
     riseSaveEvent () {
-      this.$emit('save', this.article)
+      this.$emit('save', this.value)
     },
     filterTags (query) {
+    },
+    togglePreview () {
+      let _This = this
+      _This.preview = !_This.preview
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 ul div.popper__arrow {
   display: none!important;
+}
+
+.previewer {
+  pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    code {
+      padding: 0;
+      font-size: inherit;
+      color: inherit;
+      white-space: pre-wrap;
+      background-color: transparent;
+      border-radius: 0;
+    }
+  }
 }
 </style>
 
@@ -122,15 +154,16 @@ input[type=text], textarea {
     .el-button {
       padding: 7px;
     }
-
   }
-  .editor-content {
+  .editor-content, .previewer {
     padding: 5px 15px;
     position: relative;
     bottom: 0;
-    cursor: text;
-    display: flex;
     height: 100%;
+  }
+  .editor-content {
+    display: flex;
+    cursor: text;
     textarea,  pre {
       margin: 0;
       padding: 0;
@@ -176,6 +209,10 @@ input[type=text], textarea {
       /* This height is used when JS is disabled */
       height: 100px;
     }
+  }
+  .previewer {
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 }
 </style>
