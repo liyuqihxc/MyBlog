@@ -20,5 +20,10 @@ namespace MyBlog.Repository
         {
             return _DbContext.Tags;
         }
+
+        public override bool Any(Expression<Func<TagModel, bool>> predicate)
+        {
+            return _DbContext.Tags.Any(predicate);
+        }
     }
 }

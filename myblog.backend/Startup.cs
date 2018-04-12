@@ -91,7 +91,7 @@ namespace MyBlog
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterType<BlogDbContext>().InstancePerDependency();
+            builder.RegisterType<BlogDbContext>().InstancePerLifetimeScope();
 
             Assembly self = GetType().Assembly;
             builder.RegisterAssemblyTypes(self).Where(t => !t.IsGenericType && t.FullName.StartsWith("MyBlog.Repository.")).AsImplementedInterfaces();

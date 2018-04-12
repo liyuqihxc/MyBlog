@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MyBlog.IRepository
 {
@@ -13,7 +14,11 @@ namespace MyBlog.IRepository
 
         bool Any(object key);
 
+        bool Any(Expression<Func<T, bool>> predicate);
+
         IQueryable<T> All();
+
+        IDbContextTransaction BeginTransaction();
 
         T Find(object key);
 
@@ -30,5 +35,11 @@ namespace MyBlog.IRepository
         void Update(T t);
 
         void UpdateRange(IEnumerable<T> t);
+
+        IEnumerable<T> Except(IEnumerable<T> second);
+
+        IEnumerable<T> Union(IEnumerable<T> second);
+
+        IEnumerable<T> Intersect(IEnumerable<T> second);
     }
 }

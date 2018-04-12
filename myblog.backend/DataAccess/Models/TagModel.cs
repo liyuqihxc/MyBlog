@@ -13,6 +13,6 @@ namespace MyBlog.DataAccess.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public ICollection<TagRelationModel> TagRelations { get; set; }
+        public ICollection<PostTagRelationModel> TagRelations { get; set; }
     }
 }

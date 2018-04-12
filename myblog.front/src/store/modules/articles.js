@@ -10,6 +10,9 @@ const actions = {
     let payloadTags = await articlesApi.loadTags()
     let payloadCats = await articlesApi.loadCategories()
     commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, { payloadTags, payloadCats })
+  },
+  async [muta.AC_ARTICLES_ADD_NEW] ({ commit, state }, { title, category, tags, content }) {
+    await articlesApi.addNewPost({ title, category, tags, content })
   }
 }
 

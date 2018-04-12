@@ -14,6 +14,7 @@ namespace MyBlog.DataAccess
         public virtual DbSet<CategoryModel> Categories { get; set; }
         public virtual DbSet<TagModel> Tags { get; set; }
         public virtual DbSet<PostModel> Posts { get; set; }
+        public virtual DbSet<PostTagRelationModel> PostTagRelations { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
@@ -67,7 +68,7 @@ namespace MyBlog.DataAccess
                 m.HasIndex(t => t.Name).IsUnique();
             });
 
-            modelBuilder.Entity<TagRelationModel>((m) =>
+            modelBuilder.Entity<PostTagRelationModel>((m) =>
             {
                 m.HasKey(tr => tr.ID);
                 m.Property(tr => tr.ID).ValueGeneratedOnAdd();

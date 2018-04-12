@@ -20,5 +20,10 @@ namespace MyBlog.Repository
         {
             return _DbContext.Categories;
         }
+
+        public override bool Any(Expression<Func<CategoryModel, bool>> predicate)
+        {
+            return _DbContext.Categories.Any(predicate);
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace MyBlog.IRepository
 {
     public interface IArticlesRepository : IBaseRepository<PostModel>
     {
-
+        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
 using MyBlog.DataAccess;
 using MyBlog.IRepository;
 
@@ -77,6 +78,31 @@ namespace MyBlog.Repository
         public virtual IQueryable<T> Where(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
+        }
+
+        public virtual bool Any(Expression<Func<T, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IEnumerable<T> Except(IEnumerable<T> second)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IEnumerable<T> Union(IEnumerable<T> second)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IEnumerable<T> Intersect(IEnumerable<T> second)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return _DbContext.Database.BeginTransaction();
         }
     }
 }
