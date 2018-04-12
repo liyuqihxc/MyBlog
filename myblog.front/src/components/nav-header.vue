@@ -57,10 +57,10 @@ export default {
 
   .site-desc {
     display: inline-block;
-    font-weight: 500;
 
     > h1 {
       font-size: 16px;
+      font-weight: 500;
       padding: 0;
       margin: 6px 0;
       color: #FFF;
@@ -68,6 +68,7 @@ export default {
 
     > h2 {
       font-size: 15px;
+      font-weight: 500;
       font-style: italic;
       padding: 0;
       margin: 1px 0;

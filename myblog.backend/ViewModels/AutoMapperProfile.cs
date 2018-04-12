@@ -11,9 +11,10 @@ namespace MyBlog.ViewModels
         public AutoMapperProfile()
         {
             CreateMap<PostModel, ArticlePreviewVM>()
+                .ForMember(vm => vm.Content, opt => opt.MapFrom(m => string.Join("", m.Content.Split(new[]{"\r\n","\r","\n"}, StringSplitOptions.None).Take(15))))
                 .ForMember(vm => vm.Announcer, opt => opt.MapFrom(m => m.Announcer.NickName))
-                .ForMember(vm => vm.Category, opt => opt.MapFrom(m => m.Category.Name))
-                .ForMember(vm => vm.Tags, opt => opt.MapFrom(m => m.TagRelations.ToArray().Select(t => t.Tag.Name)));
+                .ForMember(vm => vm.Category, opt => opt.MapFrom(m => m.CategoryID))
+                .ForMember(vm => vm.Tags, opt => opt.MapFrom(m => m.TagRelations.Select(t => t.TagID)));
         }
     }
 }

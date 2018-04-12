@@ -42,13 +42,15 @@
       <pre><span>{{ value.content }}</span><br></pre>
       <textarea v-model="value.content"></textarea>
     </div>
-    <div class="previewer" v-if="preview" v-html="previewContent">
+    <div class="previewer" v-if="preview" v-html="previewContent" v-highlight>
     </div>
   </div>
 </template>
 
 <script>
 import showdown from 'showdown'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/default.css'
 const Converter = new showdown.Converter()
 
 export default {
@@ -57,6 +59,37 @@ export default {
     'categories',
     'value'
   ],
+  directives: {
+    highlight: {
+      deep: true,
+      bind: function (el, binding) {
+        // on first bind, highlight all targets
+        let targets = el.querySelectorAll('pre code')
+        targets.forEach((target) => {
+          // if a value is directly assigned to the directive, use this
+          // instead of the element content.
+          if (binding.value) {
+            target.textContent = binding.value
+          }
+          if (target.attributes.length !== 0) {
+            hljs.highlightBlock(target)
+          }
+        })
+      },
+      componentUpdated: function (el, binding) {
+        // after an update, re-fill the content and then highlight
+        let targets = el.querySelectorAll('pre code')
+        targets.forEach((target) => {
+          if (binding.value) {
+            target.textContent = binding.value
+            if (target.attributes.length !== 0) {
+              hljs.highlightBlock(target)
+            }
+          }
+        })
+      }
+    }
+  },
   data () {
     return {
       preview: false

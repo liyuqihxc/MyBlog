@@ -18,7 +18,8 @@ namespace MyBlog.ViewModels
         public DateTime ModifiedData { get; set; }
         public string Announcer { get; set; }
         public string Content { get; set; }
-        public string Category { get; set; }
-        public ICollection<string> Tags { get; set; }
+        public int? CoverImageID { get; set; }
+        public int Category { get; set; }
+        public IEnumerable<int> Tags { get; set; }
     }
 }

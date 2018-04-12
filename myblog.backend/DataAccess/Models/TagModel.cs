@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace MyBlog.DataAccess.Models
 {
-    public partial class TagModel
+    public class TagModel
     {
         [JsonProperty("key")]
         public int ID { get; set; }
@@ -13,6 +13,6 @@ namespace MyBlog.DataAccess.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public ICollection<PostTagRelationModel> TagRelations { get; set; }
+        public virtual ICollection<PostTagRelationModel> TagRelations { get; set; }
     }
 }

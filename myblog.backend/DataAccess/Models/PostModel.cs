@@ -13,11 +13,15 @@ namespace MyBlog.DataAccess.Models
         public string Content { get; set; }
 
         public int AnnouncerID { get; set; }
-        public UserModel Announcer { get; set; }
+        public virtual UserModel Announcer { get; set; }
 
         public int CategoryID { get; set; }
-        public CategoryModel Category { get; set; }
+        public virtual CategoryModel Category { get; set; }
 
-        public ICollection<PostTagRelationModel> TagRelations { get; set; }
-    }
+        public virtual ICollection<PostTagRelationModel> TagRelations { get; set; }
+
+        public int? CoverImageID { get; set; }
+
+        public ImageModel CoverImage { get; set; }
+}
 }

@@ -1,5 +1,5 @@
 <template>
-  <post-list :articles="articles" :loading="loading" :totalPage="totalPage"></post-list>
+  <post-list :articles="articles" :loading="loading" :totalPage="totalPage" :tags="allTags"></post-list>
 </template>
 
 <script>
@@ -19,10 +19,14 @@ export default {
   },
   computed: mapState({
     articles: state => state.articles.articlePaging.list,
-    totalPage: state => state.articles.articlePaging.totalPage
+    totalPage: state => state.articles.articlePaging.totalPage,
+    allTags: state => state.articles.allTags,
+    allCategories: state => state.articles.allCategories
   }),
   mounted () {
-    this.getAllArticles()
+    let _This = this
+    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_TAGS_CATEGORIES)
+    _This.getAllArticles()
   },
   methods: {
     getAllArticles (page) {

@@ -13,6 +13,6 @@ namespace MyBlog.DataAccess.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public ICollection<PostModel> Posts { get; set; }
+        public virtual ICollection<PostModel> Posts { get; set; }
     }
 }

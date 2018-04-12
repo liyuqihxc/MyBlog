@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyBlog.Common;
 using MyBlog.DataAccess.Models;
 using MyBlog.IRepository;
@@ -45,13 +46,16 @@ namespace MyBlog.App
                 int total = _ArticlesRepository.Where(p => p.Published).Count();
                 var result = _ArticlesRepository.Where(p => p.Published)
                     .OrderByDescending(p => p.CreateDate)
+                    .Include(p => p.Category)
+                    .Include(p => p.Announcer)
+                    .Include(p => p.TagRelations)
                     .Skip((page - 1) * count)
                     .Take(count)
                     .ToArray();
 
                 return new PagingVM<IEnumerable<ArticlePreviewVM>>
                 {
-                    TotalPage = (total / count) + (total % count),
+                    TotalPage = (total / count) + (total % count) == 0 ? 0 : 1,
                     CurrentPage = page,
                     Data = _Mapper.Map<IEnumerable<ArticlePreviewVM>>(result)
                 };

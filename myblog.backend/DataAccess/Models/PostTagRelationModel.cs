@@ -7,8 +7,8 @@ namespace MyBlog.DataAccess.Models
     {
         public int ID { get; set; }
         public int TagID { get; set; }
-        public TagModel Tag { get; set; }
+        public virtual TagModel Tag { get; set; }
         public int PostID { get; set; }
-        public PostModel Post { get; set; }
+        public virtual PostModel Post { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace MyBlog.DataAccess
         public virtual DbSet<TagModel> Tags { get; set; }
         public virtual DbSet<PostModel> Posts { get; set; }
         public virtual DbSet<PostTagRelationModel> PostTagRelations { get; set; }
+        public virtual DbSet<ImageModel> Images { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
@@ -85,6 +86,20 @@ namespace MyBlog.DataAccess
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
+            modelBuilder.Entity<ImageModel>((m) =>
+            {
+                m.HasKey(im => im.ID);
+                m.Property(im => im.ID).ValueGeneratedOnAdd();
+                m.HasIndex(im => im.ID).IsUnique();
+
+                m.Property(im => im.Image).IsRequired();
+
+                m.Property(im => im.Name)
+                    .IsRequired()
+                    .HasMaxLength(10);
+                m.HasIndex(im => im.Name).IsUnique();
+            });
+
             modelBuilder.Entity<PostModel>((m) =>
             {
                 m.HasKey(p => p.ID);
@@ -103,6 +118,11 @@ namespace MyBlog.DataAccess
                 m.HasOne(p => p.Category)
                     .WithMany(c => c.Posts)
                     .HasForeignKey(p => p.CategoryID)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                m.HasOne(p => p.CoverImage)
+                    .WithMany(im => im.Posts)
+                    .HasForeignKey(p => p.CoverImageID)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
         }
