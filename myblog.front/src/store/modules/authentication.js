@@ -3,14 +3,14 @@ import auth from '@/api/authApi'
 
 const actions = {
   async login ({ commit, state }, loginModel) {
-    let logined = await auth.login(loginModel.userName, loginModel.password)
-    commit(muta.LOGIN, logined)
+    let jwt = await auth.login(loginModel.userName, loginModel.password)
+    commit(muta.LOGIN, jwt)
   }
 }
 
 const mutations = {
-  [muta.LOGIN] (state, logined) {
-    state.logined = logined
+  [muta.LOGIN] (state, jwt) {
+    state.logined = jwt
   }
 }
 

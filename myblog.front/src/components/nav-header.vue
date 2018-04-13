@@ -19,10 +19,10 @@
             <el-menu-item :index="'2-' + index" v-for="(m, index) in classes" :key="index" :route="m.url">{{m.name}}</el-menu-item>
         </el-submenu>
         <el-menu-item index="3">
-            <a href="mailto:liyuqihxc@gmail.com" title="Email我"><i class="fa fa-envelope fa-lg"></i></a>
+            <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
         </el-menu-item>
         <el-menu-item index="4">
-            <a href="https://github.com/liyuqihxc" title="关注GitHub"><i class="fa fa-github fa-lg"></i></a>
+            <a href="https://github.com/liyuqihxc" title="关注GitHub"><fa-icon :icon="['fab','github']" size="lg"/></a>
         </el-menu-item>
         </el-menu>
       </el-col>

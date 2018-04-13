@@ -7,11 +7,13 @@ import PostsAll from './PostsAll'
 import PostsByTag from './PostsByTag'
 import PostsByCat from './PostsByCat'
 import NewPost from './NewPost'
+import ViewPost from './ViewPost'
 // import store from '../store'
 
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/login',
@@ -48,6 +50,10 @@ const router = new Router({
             {
               path: 'categories/:catname',
               component: PostsByCat
+            },
+            {
+              path: 'viewpost/:postid',
+              component: ViewPost
             }
           ]
         },

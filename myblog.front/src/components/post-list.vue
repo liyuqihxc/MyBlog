@@ -1,12 +1,12 @@
 <template>
   <div class="article-list">
     <div class="post" v-for="(article,ia) in articles" :key="ia">
-      <h1><router-link :to="{path:'/post',query:{postid:article.id}}">{{ article.title }}</router-link></h1>
+      <h1><router-link :to="{path:`/posts/viewpost/${article.id}`}">{{ article.title }}</router-link></h1>
       <p class="post-date">{{ article.createDate }}&nbsp;-&nbsp;{{ article.announcer }}</p>
       <div class="tags">
         <fa-icon :icon="['fas','tags']"></fa-icon>
-        <router-link v-for="tag in article.tags" :key="tag" :to="{path:'/'}">
-          <span class="tag padded-sm img-rounded margin-sm-right">{{ tags.find(e => e.key === tag).label }}</span>
+        <router-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts/tags/${tags.find(e => e.key === tag)['label']}`}">
+          <span class="tag padded-sm img-rounded margin-sm-right">{{ tags.find(e => e.key === tag)['label'] }}</span>
         </router-link>
       </div>
       <div class="clearfix">
