@@ -35,6 +35,7 @@ namespace MyBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.AddMvc();
             services.AddEntityFrameworkSqlite().AddDbContext<DataAccess.BlogDbContext>(
                 optionsBuilder => optionsBuilder.UseSqlite(Configuration.GetConnectionString("BlogDb")));

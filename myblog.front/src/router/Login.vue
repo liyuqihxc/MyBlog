@@ -9,7 +9,7 @@
         <el-form-item prop="checkPass">
           <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
-        <div class="g-recaptcha" data-sitekey="6Lc5DlMUAAAAAEpS3STxlbnjO4kJvFVWQ2QZDGi3" v-if="1===2"></div>
+        <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc5DlMUAAAAAEpS3STxlbnjO4kJvFVWQ2QZDGi3" v-if="checkForBots"></div>
         <el-form-item style="width:100%;">
           <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录</el-button>
           <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
@@ -25,14 +25,17 @@
 
 <script>
 import SiteFooter from '../components/site-footer'
+import { mapState } from 'vuex'
+import * as muta from '@/store/mutation-types'
 
 export default {
   data () {
     return {
       logining: false,
+      widgetId: '',
       ruleForm2: {
         account: 'admin',
-        checkPass: '123456'
+        checkPass: '963852'
       },
       rules2: {
         account: [
@@ -46,11 +49,19 @@ export default {
       }
     }
   },
+  computed: mapState({
+    checkForBots: state => state.authentication.checkForBots,
+    logined: state => state.authentication.logined
+  }),
+  beforeRouteUpdate (to, from, next) {
+    // react to route changes...
+    next()
+  },
   components: {
     'site-footer': SiteFooter,
     'remote-js': {
       render (createElement) {
-        return createElement('script', {attrs: { type: 'text/javascript', src: this.src }})
+        return createElement('script', {attrs: { type: 'text/javascript', src: this.src, async: 'async', defer: 'defer' }})
       }
     }
   },
@@ -59,12 +70,25 @@ export default {
       this.$refs.ruleForm2.resetFields()
     },
     handleSubmit2 (ev) {
-      this.$refs.ruleForm2.validate((valid) => {
+      let _This = this
+      _This.$refs.ruleForm2.validate((valid) => {
         if (valid) {
-          // _this.$router.replace('/table')
-          this.logining = true
-          // NProgress.start()
-          // let loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass }
+          _This.logining = true
+          let loginParams = {
+            username: _This.ruleForm2.account,
+            password: _This.ruleForm2.checkPass,
+            g_recaptcha_response: _This.widgetId ? window.grecaptcha.getResponse(_This.widgetId) : ''
+          }
+          _This.$store.dispatch(muta.AC_LOGIN, loginParams).then(function () {
+            _This.logining = false
+            if (_This.logined) {
+              _This.$router.push({path: '/'})
+            } else if (_This.checkForBots && window.grecaptcha) {
+              _This.widgetId = window.grecaptcha.render('recaptcha', {
+                'sitekey': '6Lc5DlMUAAAAAEpS3STxlbnjO4kJvFVWQ2QZDGi3'
+              })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false

@@ -2,8 +2,7 @@ import axios from 'axios'
 
 let handleHttpError = function (error) {
   let httpStatusCode = error.response.status
-  let resultData = error.response.data
-  let msg = resultData.error_description || resultData.Message
+  let msg = error.response.data
 
   switch (httpStatusCode) {
     case 500:

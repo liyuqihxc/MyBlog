@@ -16,5 +16,12 @@ export default {
   async addNewPost (params) {
     let result = await http.post('/api/articles/addnew', params)
     return result
+  },
+  async loadArticle (id) {
+    return http.fetch('/api/articles/loadarticle', {
+      params: {
+        id
+      }
+    })
   }
 }

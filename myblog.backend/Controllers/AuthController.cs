@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using MyBlog.IRepository;
 using MyBlog.App;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace MyBlog.Controllers
 {
@@ -20,21 +21,27 @@ namespace MyBlog.Controllers
     {
         private IConfiguration _Configuration { get; }
         private AuthApp _AuthApp { get; }
+        private IMemoryCache _MemoryCache;
 
-        public AuthController(IConfiguration configuration, AuthApp authApp)
+        public AuthController(IConfiguration configuration, AuthApp authApp, IMemoryCache memoryCache)
         {
             _Configuration = configuration;
             _AuthApp = authApp;
+            _MemoryCache = memoryCache;
         }
 
         // GET: api/auth/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login([FromBody]dynamic Params)
         {
+            string username = (string)Params.username;
+            string password = (string)Params.password;
+            string g_recaptcha_response = (string)Params.g_recaptcha_response;
+
             var user = await _AuthApp.Verify(username, password);
             if (user == null)
-                return BadRequest("用户不存在。");
+                return Ok(new { access_token = "", expires_on = "" });
 
             IEnumerable<Claim> claims = new[]
             {

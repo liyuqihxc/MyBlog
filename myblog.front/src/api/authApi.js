@@ -1,8 +1,9 @@
 import http from '@/common/http'
 
 export default {
-  async login (userName, password) {
-    await http.post('/api/login', { username: userName, password: password })
-    return true
+  /* eslint-disable-next-line */
+  async login ({ username, password, g_recaptcha_response }) {
+    let result = await http.post('/api/auth/login', { username, password, g_recaptcha_response })
+    return result
   }
 }

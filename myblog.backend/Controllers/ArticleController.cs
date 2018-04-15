@@ -59,5 +59,11 @@ namespace MyBlog.Controllers
             await _ArticlesApp.AddNewArticle(title, category, tags, content, "admin");
             return Ok();
         }
+
+        [HttpGet, Route("loadarticle")]
+        public async Task<IActionResult> LoadArticle(int id)
+        {
+            
+        }
     }
 }

@@ -15,7 +15,6 @@
         </el-menu-item>
         <el-submenu index="2">
             <template slot="title">文章分类</template>
-            <!-- eslint-disable-next-line -->
             <el-menu-item :index="'2-' + index" v-for="(m, index) in classes" :key="index" :route="m.url">{{m.name}}</el-menu-item>
         </el-submenu>
         <el-menu-item index="3">

@@ -13,6 +13,9 @@ const actions = {
   },
   async [muta.AC_ARTICLES_ADD_NEW] ({ commit, state }, { title, category, tags, content }) {
     await articlesApi.addNewPost({ title, category, tags, content })
+  },
+  async [muta.AC_ARTICLES_LOAD_ARTICLE]({ commit, state }, id) {
+    return articlesApi
   }
 }
 
