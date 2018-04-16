@@ -25,5 +25,10 @@ namespace MyBlog.Repository
         {
             return _DbContext.Posts.Where(predicate);
         }
+
+        public override PostModel First(Expression<Func<PostModel, bool>> predicate)
+        {
+            return _DbContext.Posts.First(predicate);
+        }
     }
 }

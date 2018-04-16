@@ -39,9 +39,9 @@ namespace MyBlog.App
             _UserRepository = userRepository;
         }
 
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewAllArticles(int page, int count)
+        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewAllArticles(int page, int count)
         {
-            return Task<PagingVM<IEnumerable<ArticlePreviewVM>>>.Factory.StartNew(() => 
+            return Task<PagingVM<IEnumerable<ArticleVM>>>.Factory.StartNew(() => 
             {
                 int total = _ArticlesRepository.Where(p => p.Published).Count();
                 var result = _ArticlesRepository.Where(p => p.Published)
@@ -53,11 +53,11 @@ namespace MyBlog.App
                     .Take(count)
                     .ToArray();
 
-                return new PagingVM<IEnumerable<ArticlePreviewVM>>
+                return new PagingVM<IEnumerable<ArticleVM>>
                 {
                     TotalPage = (total / count) + (total % count) == 0 ? 0 : 1,
                     CurrentPage = page,
-                    Data = _Mapper.Map<IEnumerable<ArticlePreviewVM>>(result)
+                    Data = _Mapper.Map<IEnumerable<ArticleVM>>(result)
                 };
             });
         }
@@ -100,7 +100,7 @@ namespace MyBlog.App
                         PostModel post = new PostModel
                         {
                             Title = title,
-                            Published = false,
+                            Published = true,
                             CreateDate = now,
                             ModifiedData = now,
                             Content = content,
@@ -127,6 +127,15 @@ namespace MyBlog.App
                         throw;
                     }
                 }
+            });
+        }
+
+        public Task<ArticleVM> LoadArticle(int id)
+        {
+            return Task<ArticleVM>.Factory.StartNew(() =>
+            {
+                var article = _ArticlesRepository.First(p => p.ID == id);
+                return _Mapper.Map<ArticleVM>(article);
             });
         }
     }

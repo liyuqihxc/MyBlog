@@ -24,19 +24,19 @@ namespace MyBlog.Controllers
         }
 
         [HttpGet, Route("list")]
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewAllArticles(int page, int count)
+        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewAllArticles(int page, int count)
         {
             return _ArticlesApp.PreviewAllArticles(page, count);
         }
 
         [HttpGet, Route("previewbycat")]
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticlesByCategory(string category, int page, int count)
+        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewArticlesByCategory(string category, int page, int count)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet, Route("previewbytag")]
-        public Task<PagingVM<IEnumerable<ArticlePreviewVM>>> PreviewArticlesByTag(string tag, int page, int count)
+        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewArticlesByTag(string tag, int page, int count)
         {
             throw new NotImplementedException();
         }
@@ -57,13 +57,13 @@ namespace MyBlog.Controllers
             int category = (int)Params.category;
             string content = (string)Params.content;
             await _ArticlesApp.AddNewArticle(title, category, tags, content, "admin");
-            return Ok();
+            return Ok("保存成功。");
         }
 
         [HttpGet, Route("loadarticle")]
-        public async Task<IActionResult> LoadArticle(int id)
+        public Task<ArticleVM> LoadArticle(int id)
         {
-            
+            return _ArticlesApp.LoadArticle(id);
         }
     }
 }

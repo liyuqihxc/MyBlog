@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace MyBlog.ViewModels
 {
-    public class ArticlePreviewVM
+    public class ArticleVM
     {
         public int ID { get; set; }
         public string Title { get; set; }
