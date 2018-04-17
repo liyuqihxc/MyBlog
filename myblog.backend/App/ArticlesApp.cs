@@ -53,6 +53,11 @@ namespace MyBlog.App
                     .Take(count)
                     .ToArray();
 
+                foreach(var article in result)
+                {
+                    article.Content = string.Join("", article.Content.Split(new[]{"\r\n","\r","\n"}, StringSplitOptions.None).Take(15));
+                }
+
                 return new PagingVM<IEnumerable<ArticleVM>>
                 {
                     TotalPage = (total / count) + (total % count) == 0 ? 0 : 1,
