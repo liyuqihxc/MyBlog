@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "blog_deploy"
+BASE_DIR="$1"
+FRONT_DIR="myblog.front"
+BACKEND_DIR="myblog.backend"
+

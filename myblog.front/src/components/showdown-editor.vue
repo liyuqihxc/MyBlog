@@ -42,15 +42,16 @@
       <pre><span>{{ value.content }}</span><br></pre>
       <textarea v-model="value.content"></textarea>
     </div>
-    <div class="previewer" v-if="preview" v-html="previewContent" v-highlight>
+    <div class="article" v-if="preview" v-html="previewContent" v-highlight>
     </div>
   </div>
 </template>
 
 <script>
 import showdown from 'showdown'
-import hljs from 'highlight.js'
+import highlight from '@/directives/highlight'
 import 'highlight.js/styles/default.css'
+import '@/assets/scss/article.scss'
 const Converter = new showdown.Converter()
 
 export default {
@@ -60,35 +61,7 @@ export default {
     'value'
   ],
   directives: {
-    highlight: {
-      deep: true,
-      bind: function (el, binding) {
-        // on first bind, highlight all targets
-        let targets = el.querySelectorAll('pre code')
-        targets.forEach((target) => {
-          // if a value is directly assigned to the directive, use this
-          // instead of the element content.
-          if (binding.value) {
-            target.textContent = binding.value
-          }
-          if (target.attributes.length !== 0) {
-            hljs.highlightBlock(target)
-          }
-        })
-      },
-      componentUpdated: function (el, binding) {
-        // after an update, re-fill the content and then highlight
-        let targets = el.querySelectorAll('pre code')
-        targets.forEach((target) => {
-          if (binding.value) {
-            target.textContent = binding.value
-            if (target.attributes.length !== 0) {
-              hljs.highlightBlock(target)
-            }
-          }
-        })
-      }
-    }
+    highlight
   },
   data () {
     return {
@@ -125,30 +98,6 @@ export default {
 <style lang="scss">
 ul div.popper__arrow {
   display: none!important;
-}
-
-.previewer {
-  pre {
-    display: block;
-    padding: 9.5px;
-    margin: 0 0 10px;
-    font-size: 13px;
-    line-height: 1.42857143;
-    color: #333;
-    word-break: break-all;
-    word-wrap: break-word;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    code {
-      padding: 0;
-      font-size: inherit;
-      color: inherit;
-      white-space: pre-wrap;
-      background-color: transparent;
-      border-radius: 0;
-    }
-  }
 }
 </style>
 
@@ -188,7 +137,7 @@ input[type=text], textarea {
       padding: 7px;
     }
   }
-  .editor-content, .previewer {
+  .editor-content, .article {
     padding: 5px 15px;
     position: relative;
     bottom: 0;
@@ -243,7 +192,7 @@ input[type=text], textarea {
       height: 100px;
     }
   }
-  .previewer {
+  .article {
     overflow-x: hidden;
     overflow-y: scroll;
   }

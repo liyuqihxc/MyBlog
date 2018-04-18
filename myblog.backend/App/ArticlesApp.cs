@@ -139,7 +139,11 @@ namespace MyBlog.App
         {
             return Task<ArticleVM>.Factory.StartNew(() =>
             {
-                var article = _ArticlesRepository.First(p => p.ID == id);
+                var article = _ArticlesRepository
+                    .All()
+                    .Include(p => p.Announcer)
+                    .Include(p => p.TagRelations)
+                    .First(p => p.ID == id);
                 return _Mapper.Map<ArticleVM>(article);
             });
         }

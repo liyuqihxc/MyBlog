@@ -14,18 +14,19 @@ export default {
   data () {
     return {
       currentPage: 1,
-      loading: false
+      loading: false,
+      allTags: []
     }
   },
   computed: mapState({
     articles: state => state.articles.articlePaging.list,
-    totalPage: state => state.articles.articlePaging.totalPage,
-    allTags: state => state.articles.allTags,
-    allCategories: state => state.articles.allCategories
+    totalPage: state => state.articles.articlePaging.totalPage
   }),
-  mounted () {
+  created () {
     let _This = this
-    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_TAGS_CATEGORIES)
+    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_ALL_TAGS).then(function (allTags) {
+      _This.allTags = allTags
+    })
     _This.getAllArticles()
   },
   methods: {

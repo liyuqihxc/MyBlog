@@ -13,7 +13,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using MyBlog.DataAccess;
+#if DEBUG
 using Swashbuckle.AspNetCore.Swagger;
+#endif
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;

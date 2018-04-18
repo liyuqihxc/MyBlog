@@ -1,23 +1,20 @@
 import http from '@/common/http'
 
 export default {
-  async listAll (params) {
-    let result = await http.fetch('/api/articles/list', { params })
+  listAll (params) {
+    let result = http.fetch('/api/articles/list', { params })
     return result
   },
-  async loadCategories () {
-    let result = await http.fetch('/api/articles/allcategories')
-    return result
+  loadCategories () {
+    return http.fetch('/api/articles/allcategories')
   },
-  async loadTags () {
-    let result = await http.fetch('/api/articles/alltags')
-    return result
+  loadTags () {
+    return http.fetch('/api/articles/alltags')
   },
   async addNewPost (params) {
-    let result = await http.post('/api/articles/addnew', params)
-    return result
+    return http.post('/api/articles/addnew', params)
   },
-  async loadArticle (id) {
+  loadArticle (id) {
     return http.fetch('/api/articles/loadarticle', {
       params: {
         id

@@ -1,14 +1,13 @@
 <template>
-  <div class="main-frame">
+  <div class="main-frame" style="height:100%">
     <el-container style="height:100%">
       <el-header class="no-padding" style="margin-bottom:20px">
         <nav-header :classes="menu" />
       </el-header>
       <el-main class="no-padding" style="height:100%">
-        <el-row type="flex" justify="center" style="height:100%">
+        <el-row type="flex" justify="center" style="min-height:100%">
           <el-col :md="15" :sm="24">
             <div class="main">
-              <div class="call-out"></div>
               <router-view></router-view>
             </div>
           </el-col>
@@ -46,8 +45,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.main-frame {
-  height: 100%;
 
-}
 </style>

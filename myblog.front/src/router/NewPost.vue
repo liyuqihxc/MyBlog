@@ -1,13 +1,12 @@
 <template>
   <div class="content-editor">
-      <showdown-editor :tags="allTags" :categories="allCategories" v-model="article" @save="savePost"></showdown-editor>
+      <showdown-editor v-if="allTags && allCategories" :tags="allTags" :categories="allCategories" v-model="article" @save="savePost"></showdown-editor>
   </div>
 </template>
 
 <script>
 import showdown from '@/components/showdown-editor'
 import * as muta from '@/store/mutation-types'
-import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -17,20 +16,22 @@ export default {
         content: '',
         tags: [],
         category: undefined
-      }
+      },
+      allTags: [],
+      allCategories: []
     }
   },
   components: {
     'showdown-editor': showdown
   },
-  computed: mapState({
-    allTags: state => state.articles.allTags,
-    allCategories: state => state.articles.allCategories
-  }),
-  mounted () {
+  created () {
     let _This = this
-    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_TAGS_CATEGORIES).then(function () {
-
+    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_ALL_TAGS).then(function (allTags) {
+      _This.allTags = allTags
+    })
+    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_ALL_CATEGORIES).then(function (allCategories) {
+      console.log(allCategories)
+      _This.allCategories = allCategories
     })
   },
   methods: {

@@ -6,16 +6,20 @@ const actions = {
     let payload = await articlesApi.listAll(param)
     commit(muta.MU_ARTICLES_UPDATE_PAGING, payload)
   },
-  async [muta.AC_ARTICLES_FETCH_TAGS_CATEGORIES] ({ commit, state }) {
+  async [muta.AC_ARTICLES_FETCH_ALL_TAGS] ({ commit, state }) {
     let payloadTags = await articlesApi.loadTags()
+    return payloadTags
+  },
+  async [muta.AC_ARTICLES_FETCH_ALL_CATEGORIES] ({ commit, state }) {
     let payloadCats = await articlesApi.loadCategories()
-    commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, { payloadTags, payloadCats })
+    return payloadCats
   },
   async [muta.AC_ARTICLES_ADD_NEW] ({ commit, state }, { title, category, tags, content }) {
     await articlesApi.addNewPost({ title, category, tags, content })
   },
   async [muta.AC_ARTICLES_LOAD_ARTICLE] ({ commit, state }, id) {
-    return articlesApi.loadArticle(id)
+    let result = await articlesApi.loadArticle(id)
+    return result
   }
 }
 
@@ -35,9 +39,7 @@ const articles = {
     articlePaging: {
       list: [],
       totalPage: 0
-    },
-    allTags: [],
-    allCategories: []
+    }
   },
   actions,
   mutations
