@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace MyBlog.DataAccess.Models
+namespace MyBlog.DataAccess.Entities
 {
-    public class ImageModel
+    public class ImageEntity
     {
         public int ID { get; set; }
 
@@ -11,6 +11,6 @@ namespace MyBlog.DataAccess.Models
 
         public byte[] Image { get; set; }
 
-        public virtual ICollection<PostModel> Posts { get; set; }
+        public virtual ICollection<PostEntity> Posts { get; set; }
     }
 }

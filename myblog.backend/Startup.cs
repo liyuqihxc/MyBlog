@@ -87,7 +87,7 @@ namespace MyBlog
 
             services.AddAutoMapper(cfg =>
             {
-                cfg.AddProfile<ViewModels.AutoMapperProfile>();
+                cfg.AddProfile<Models.AutoMapperProfile>();
             });
 
             services.AddAutofac();

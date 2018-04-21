@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlog.App;
 using MyBlog.Common;
-using MyBlog.DataAccess.Models;
-using MyBlog.ViewModels;
+using MyBlog.Models;
 using Newtonsoft.Json.Linq;
 
 namespace MyBlog.Controllers

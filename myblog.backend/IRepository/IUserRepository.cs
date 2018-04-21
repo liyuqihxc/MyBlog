@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using MyBlog.DataAccess.Models;
+using MyBlog.DataAccess.Entities;
 
 namespace MyBlog.IRepository
 {
-    public interface IUserRepository : IBaseRepository<UserModel>
+    public interface IUserRepository : IBaseRepository<UserEntity>
     {
         
     }

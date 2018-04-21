@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace MyBlog.DataAccess.Models
+namespace MyBlog.DataAccess.Entities
 {
-    public class UserModel
+    public class UserEntity
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -11,6 +11,6 @@ namespace MyBlog.DataAccess.Models
         public string Password { get; set;}
         public string SecurityStamp { get; set; }
 
-        public virtual ICollection<PostModel> Posts { get; set; }
+        public virtual ICollection<PostEntity> Posts { get; set; }
     }
 }

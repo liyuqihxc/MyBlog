@@ -4,29 +4,29 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MyBlog.DataAccess;
-using MyBlog.DataAccess.Models;
+using MyBlog.DataAccess.Entities;
 using MyBlog.IRepository;
 
 namespace MyBlog.Repository
 {
-    public class UserRepository : BaseRepository<UserModel>
+    public class UserRepository : BaseRepository<UserEntity>
     {
         public UserRepository(BlogDbContext dbc) : base(dbc)
         {
             
         }
 
-        public override UserModel FirstOrDefault(Expression<Func<UserModel, bool>> predicate)
+        public override UserEntity FirstOrDefault(Expression<Func<UserEntity, bool>> predicate)
         {
             return _DbContext.Users.FirstOrDefault(predicate);
         }
 
-        public override UserModel First(Expression<Func<UserModel, bool>> predicate)
+        public override UserEntity First(Expression<Func<UserEntity, bool>> predicate)
         {
             return _DbContext.Users.First(predicate);
         }
 
-        public override IQueryable<UserModel> Where(Expression<Func<UserModel, bool>> predicate)
+        public override IQueryable<UserEntity> Where(Expression<Func<UserEntity, bool>> predicate)
         {
             return _DbContext.Users.Where(predicate);
         }

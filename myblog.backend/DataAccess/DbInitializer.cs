@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyBlog.Common;
-using MyBlog.DataAccess.Models;
+using MyBlog.DataAccess.Entities;
 
 namespace MyBlog.DataAccess
 {
@@ -15,7 +15,7 @@ namespace MyBlog.DataAccess
 
             if (!context.Users.Any())
             {
-                UserModel user = new UserModel
+                UserEntity user = new UserEntity
                 {
                     Name = "admin",
                     NickName = "admin",
@@ -24,24 +24,24 @@ namespace MyBlog.DataAccess
                 };
                 context.Users.Add(user);
 
-                context.Categories.Add(new CategoryModel
+                context.Categories.Add(new CategoryEntity
                 {
                     Name = "电子技术"
                 });
-                context.Categories.Add(new CategoryModel
+                context.Categories.Add(new CategoryEntity
                 {
                     Name = "软件技术"
                 });
-                context.Categories.Add(new CategoryModel
+                context.Categories.Add(new CategoryEntity
                 {
                     Name = "操作系统"
                 });
 
-                context.Tags.Add(new TagModel
+                context.Tags.Add(new TagEntity
                 {
                     Name = "CPP"
                 });
-                context.Tags.Add(new TagModel
+                context.Tags.Add(new TagEntity
                 {
                     Name = "DotNet"
                 });

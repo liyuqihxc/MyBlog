@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MyBlog.ViewModels
+namespace MyBlog.Models
 {
-    public class PagingVM<T>
+    public class PagingModel<T>
         where T : class
     {
         public int CurrentPage { get; set; }

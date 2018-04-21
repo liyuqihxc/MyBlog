@@ -8,29 +8,29 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Common;
-using MyBlog.DataAccess.Models;
+using MyBlog.DataAccess.Entities;
 using MyBlog.IRepository;
-using MyBlog.ViewModels;
+using MyBlog.Models;
 
 namespace MyBlog.App
 {
     public class AttachmentsApp
     {
         private IMapper _Mapper { get; }
-        private IBaseRepository<ImageModel> _ImagesRepository { get; }
+        private IBaseRepository<ImageEntity> _ImagesRepository { get; }
 
         public AttachmentsApp(
             IMapper mapper,
-            IBaseRepository<ImageModel> imagesRepository
+            IBaseRepository<ImageEntity> imagesRepository
         )
         {
             _Mapper = mapper;
             _ImagesRepository = imagesRepository;
         }
 
-        internal Task<ImageModel> GetImageById(int id)
+        internal Task<ImageEntity> GetImageById(int id)
         {
-            return Task<ImageModel>.Factory.StartNew(() =>
+            return Task<ImageEntity>.Factory.StartNew(() =>
             {
                 return _ImagesRepository.Find(id);
             });

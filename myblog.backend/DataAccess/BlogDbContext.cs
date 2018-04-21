@@ -4,18 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MyBlog.DataAccess.Models;
+using MyBlog.DataAccess.Entities;
 
 namespace MyBlog.DataAccess
 {
     public class BlogDbContext : DbContext
     {
-        public virtual DbSet<UserModel> Users { get; set; }
-        public virtual DbSet<CategoryModel> Categories { get; set; }
-        public virtual DbSet<TagModel> Tags { get; set; }
-        public virtual DbSet<PostModel> Posts { get; set; }
-        public virtual DbSet<PostTagRelationModel> PostTagRelations { get; set; }
-        public virtual DbSet<ImageModel> Images { get; set; }
+        public virtual DbSet<UserEntity> Users { get; set; }
+        public virtual DbSet<CategoryEntity> Categories { get; set; }
+        public virtual DbSet<TagEntity> Tags { get; set; }
+        public virtual DbSet<PostEntity> Posts { get; set; }
+        public virtual DbSet<PostTagRelationEntity> PostTagRelations { get; set; }
+        public virtual DbSet<ImageEntity> Images { get; set; }
 
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
@@ -25,7 +25,7 @@ namespace MyBlog.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserModel>((m) =>
+            modelBuilder.Entity<UserEntity>((m) =>
             {
                 m.HasKey(u => u.ID);
                 m.Property(u => u.ID).ValueGeneratedOnAdd();
@@ -45,7 +45,7 @@ namespace MyBlog.DataAccess
                     .HasMaxLength(128 / 8);
             });
 
-            modelBuilder.Entity<CategoryModel>((m) =>
+            modelBuilder.Entity<CategoryEntity>((m) =>
             {
                 m.HasKey(c => c.ID);
                 m.Property(c => c.ID).ValueGeneratedOnAdd();
@@ -57,7 +57,7 @@ namespace MyBlog.DataAccess
                 m.HasIndex(c => c.Name).IsUnique();
             });
 
-            modelBuilder.Entity<TagModel>((m) =>
+            modelBuilder.Entity<TagEntity>((m) =>
             {
                 m.HasKey(t => t.ID);
                 m.Property(t => t.ID).ValueGeneratedOnAdd();
@@ -69,7 +69,7 @@ namespace MyBlog.DataAccess
                 m.HasIndex(t => t.Name).IsUnique();
             });
 
-            modelBuilder.Entity<PostTagRelationModel>((m) =>
+            modelBuilder.Entity<PostTagRelationEntity>((m) =>
             {
                 m.HasKey(tr => tr.ID);
                 m.Property(tr => tr.ID).ValueGeneratedOnAdd();
@@ -86,7 +86,7 @@ namespace MyBlog.DataAccess
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<ImageModel>((m) =>
+            modelBuilder.Entity<ImageEntity>((m) =>
             {
                 m.HasKey(im => im.ID);
                 m.Property(im => im.ID).ValueGeneratedOnAdd();
@@ -100,7 +100,7 @@ namespace MyBlog.DataAccess
                 m.HasIndex(im => im.Name).IsUnique();
             });
 
-            modelBuilder.Entity<PostModel>((m) =>
+            modelBuilder.Entity<PostEntity>((m) =>
             {
                 m.HasKey(p => p.ID);
                 m.Property(p => p.ID).ValueGeneratedOnAdd();

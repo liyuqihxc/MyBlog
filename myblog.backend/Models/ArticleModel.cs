@@ -4,9 +4,9 @@ using System.Linq;
 using MyBlog.Common;
 using Newtonsoft.Json;
 
-namespace MyBlog.ViewModels
+namespace MyBlog.Models
 {
-    public class ArticleVM
+    public class ArticleModel
     {
         public int ID { get; set; }
         public string Title { get; set; }

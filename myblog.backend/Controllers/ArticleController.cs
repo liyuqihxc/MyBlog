@@ -7,8 +7,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlog.App;
-using MyBlog.DataAccess.Models;
-using MyBlog.ViewModels;
+using MyBlog.DataAccess.Entities;
+using MyBlog.Models;
 using Newtonsoft.Json.Linq;
 
 namespace MyBlog.Controllers
@@ -24,28 +24,28 @@ namespace MyBlog.Controllers
         }
 
         [HttpGet, Route("list")]
-        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewAllArticles(int page, int count)
+        public Task<PagingModel<IEnumerable<ArticleModel>>> PreviewAllArticles(int page, int count)
         {
             return _ArticlesApp.PreviewAllArticles(page, count);
         }
 
         [HttpGet, Route("previewbycat")]
-        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewArticlesByCategory(string category, int page, int count)
+        public Task<PagingModel<IEnumerable<ArticleModel>>> PreviewArticlesByCategory(string category, int page, int count)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet, Route("previewbytag")]
-        public Task<PagingVM<IEnumerable<ArticleVM>>> PreviewArticlesByTag(string tag, int page, int count)
+        public Task<PagingModel<IEnumerable<ArticleModel>>> PreviewArticlesByTag(string tag, int page, int count)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet, Route("allcategories")]
-        public Task<IEnumerable<CategoryModel>> GetAllCategories() => _ArticlesApp.GetAllCategories();
+        public Task<IEnumerable<CategoryEntity>> GetAllCategories() => _ArticlesApp.GetAllCategories();
 
         [HttpGet, Route("alltags")]
-        public Task<IEnumerable<TagModel>> GetAllTags() => _ArticlesApp.GetAllTags();
+        public Task<IEnumerable<TagEntity>> GetAllTags() => _ArticlesApp.GetAllTags();
 
         //[Authorize]
         [HttpPost, Route("addnew")]
@@ -61,7 +61,7 @@ namespace MyBlog.Controllers
         }
 
         [HttpGet, Route("loadarticle")]
-        public Task<ArticleVM> LoadArticle(int id)
+        public Task<ArticleModel> LoadArticle(int id)
         {
             return _ArticlesApp.LoadArticle(id);
         }
