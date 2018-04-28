@@ -1,11 +1,19 @@
 <template>
-  <div id="app" style="height:100%">
-    <nuxt class="child-view"></nuxt>
+  <div class="child-view" style="height:100%">
+    <nuxt/>
   </div>
 </template>
 
 <script>
 export default {
+  head: {
+    htmlAttrs: {
+      lang: 'zh-cn'
+    },
+    bodyAttrs: {
+      'class': 'background blog'
+    }
+  },
   mounted: function () {
     let _This = this
     _This.$bus.$on('notify', (msg) => {
@@ -22,6 +30,10 @@ export default {
 
 <style lang="scss">
 html, body {
+  height: 100%;
+}
+
+#__nuxt, #__layout {
   height: 100%;
 }
 </style>

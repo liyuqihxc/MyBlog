@@ -16,7 +16,7 @@
       <h3>
           <router-link to="/">借助GitHub Pages配合Jekyll构建个人博客站点</router-link>
       </h3>
-      <img src="/static/img/2015-04-22-Github_feature.webp" class="feature-image-small pull-left">
+      <img src="/img/2015-04-22-Github_feature.webp" class="feature-image-small pull-left">
       <div>
           Quick Setup Jekyll是基于Ruby的工具，首先需要安装Ruby，Ruby的官方网站可以下载。安装好后会自动弹出命令提示符窗口询问是否安装msys2，因为后面需要用 gem 安装Jekyll，所以这里选择安装 msys2 和 MinGW dev toolchain。之后是gem，gem可以在(rubygems.org)[https://rubygems.org/pages/download]下载，安装完后重新打开命令提示符，用 gem install 命令安装以下几个gem包：
       </div>

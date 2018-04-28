@@ -14,20 +14,20 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  bodyAttrs: {
-    'class': 'background blog'
-  },
-  /*
-  ** Global CSS
-  */
   css: [
     // '~/assets/css/main.css',
     'element-ui/lib/theme-chalk/display.css',
     { src: '~assets/scss/site.scss', lang: 'scss' }
   ],
-  /*
-  ** Add axios globally
-  */
+  router: {
+    extendRoutes (routes) {
+      routes.push({
+        path: '/',
+        redirect: '/posts',
+        component: require('path').resolve('pages/index.vue')
+      })
+    }
+  },
   loading: {
     color: 'cyan',
     height: '4px'
