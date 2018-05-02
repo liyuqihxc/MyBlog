@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace MyBlog.IRepository
+namespace MyBlog.Domain.IRepository
 {
     public interface IBaseRepository<T>
         where T : class
@@ -36,10 +36,10 @@ namespace MyBlog.IRepository
 
         void UpdateRange(IEnumerable<T> t);
 
-        IEnumerable<T> Except(IEnumerable<T> second);
+        IQueryable<T> Except(IQueryable<T> second);
 
-        IEnumerable<T> Union(IEnumerable<T> second);
+        IQueryable<T> Union(IQueryable<T> second);
 
-        IEnumerable<T> Intersect(IEnumerable<T> second);
+        IQueryable<T> Intersect(IQueryable<T> second);
     }
 }

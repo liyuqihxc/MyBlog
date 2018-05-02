@@ -7,12 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using MyBlog.DataAccess;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
-using MyBlog.IRepository;
 using MyBlog.App;
 using Microsoft.Extensions.Caching.Memory;
+using MyBlog.Models;
 
 namespace MyBlog.Controllers
 {
@@ -33,13 +32,9 @@ namespace MyBlog.Controllers
         // GET: api/auth/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody]dynamic Params)
+        public async Task<IActionResult> Login([FromBody]LoginModel Params)
         {
-            string username = (string)Params.username;
-            string password = (string)Params.password;
-            string g_recaptcha_response = (string)Params.g_recaptcha_response;
-
-            var user = await _AuthApp.Verify(username, password);
+            var user = await _AuthApp.Verify(Params.username, Params.password);
             if (user == null)
                 return Ok(new { access_token = "", expires_on = "" });
 

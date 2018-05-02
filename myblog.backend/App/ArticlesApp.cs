@@ -7,8 +7,8 @@ using System.Transactions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Common;
-using MyBlog.DataAccess.Entities;
-using MyBlog.IRepository;
+using MyBlog.Domain.Entities;
+using MyBlog.Domain.IRepository;
 using MyBlog.Models;
 
 namespace MyBlog.App
@@ -16,19 +16,19 @@ namespace MyBlog.App
     public class ArticlesApp
     {
         private IMapper _Mapper { get; }
-        private IBaseRepository<PostEntity> _ArticlesRepository { get; }
-        private IBaseRepository<TagEntity> _TagsRepository { get; }
-        private IBaseRepository<CategoryEntity> _CategoriesRepository { get; }
-        private IBaseRepository<PostTagRelationEntity> _PostTagRelationsRepository { get; }
-        private IBaseRepository<UserEntity> _UserRepository { get; }
+        private IArticlesRepository _ArticlesRepository { get; }
+        private ITagsRepository _TagsRepository { get; }
+        private ICategoriesRepository _CategoriesRepository { get; }
+        private IPostTagRelationsRepository _PostTagRelationsRepository { get; }
+        private IUserRepository _UserRepository { get; }
 
         public ArticlesApp(
             IMapper mapper,
-            IBaseRepository<PostEntity> articlesRepository,
-            IBaseRepository<TagEntity> tagsRepository,
-            IBaseRepository<CategoryEntity> categoriesRepository,
-            IBaseRepository<PostTagRelationEntity> postTagRelationsRepository,
-            IBaseRepository<UserEntity> userRepository
+            IArticlesRepository articlesRepository,
+            ITagsRepository tagsRepository,
+            ICategoriesRepository categoriesRepository,
+            IPostTagRelationsRepository postTagRelationsRepository,
+            IUserRepository userRepository
         )
         {
             _Mapper = mapper;

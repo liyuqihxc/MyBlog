@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyBlog.Common;
-using MyBlog.DataAccess.Entities;
-using MyBlog.IRepository;
+using MyBlog.Domain.Entities;
+using MyBlog.Domain.IRepository;
 
 namespace MyBlog.App
 {

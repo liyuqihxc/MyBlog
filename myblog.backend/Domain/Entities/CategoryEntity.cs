@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace MyBlog.DataAccess.Entities
+namespace MyBlog.Domain.Entities
 {
-    public class TagEntity
+    public class CategoryEntity
     {
         [JsonProperty("key")]
         public int ID { get; set; }
@@ -13,6 +13,6 @@ namespace MyBlog.DataAccess.Entities
         public string Name { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<PostTagRelationEntity> TagRelations { get; set; }
+        public ICollection<PostEntity> Posts { get; set; }
     }
 }

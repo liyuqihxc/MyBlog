@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyBlog.DataAccess.Entities
+namespace MyBlog.Domain.Entities
 {
     public class ImageEntity
     {
@@ -11,6 +11,6 @@ namespace MyBlog.DataAccess.Entities
 
         public byte[] Image { get; set; }
 
-        public virtual ICollection<PostEntity> Posts { get; set; }
+        public ICollection<PostEntity> Posts { get; set; }
     }
 }

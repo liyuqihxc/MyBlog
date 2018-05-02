@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MyBlog.DataAccess.Entities;
+using MyBlog.Domain.Entities;
 
-namespace MyBlog.DataAccess
+namespace MyBlog.Repository
 {
     public class BlogDbContext : DbContext
     {

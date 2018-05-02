@@ -1,7 +1,5 @@
 module.exports = {
-  /*
-  ** Headers of the page
-  */
+  // https://github.com/justyeh/justyeh.com
   head: {
     title: 'starter',
     meta: [
@@ -15,22 +13,15 @@ module.exports = {
     ]
   },
   css: [
-    // '~/assets/css/main.css',
-    'element-ui/lib/theme-chalk/display.css',
+    'element-ui/lib/theme-chalk/index.css',
     { src: '~assets/scss/site.scss', lang: 'scss' }
   ],
-  router: {
-    extendRoutes (routes) {
-      routes.push({
-        path: '/',
-        redirect: '/posts',
-        component: require('path').resolve('pages/index.vue')
-      })
-    }
-  },
   loading: {
     color: 'cyan',
     height: '4px'
+  },
+  env: {
+    proxyUrl: process.env.PROXY_URL || 'http://127.0.0.1:18089'
   },
   plugins: [
     '~/plugins/event-bus.js',
@@ -38,6 +29,7 @@ module.exports = {
     '~/plugins/fontawesome.js'
   ],
   build: {
+    analyze: true,
     vendor: [
       'axios',
       'element-ui',

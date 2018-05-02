@@ -5,7 +5,8 @@
   "author": "liyuqihxc <liyuqihxc@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "backpack dev",
+    "dev": "cross-env PROXY_URL=http://127.0.0.1:18089/ backpack dev",
+    "dev-debug": "node --inspect node_modules/nuxt/bin/nuxt",
     "build": "nuxt build && backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js",
     "precommit": "npm run lint",
@@ -22,6 +23,7 @@
     "css-loader": "^0.28.11",
     "element-ui": "^2.3.6",
     "express": "^4.15.3",
+    "express-session": "^1.15.6",
     "highlight.js": "^9.12.0",
     "node-sass": "^4.9.0",
     "nuxt": "^1.0.0-rc3",
@@ -41,6 +43,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "http-proxy-agent": "^2.1.0"
   }
 }

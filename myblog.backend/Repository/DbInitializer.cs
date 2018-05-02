@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyBlog.Common;
-using MyBlog.DataAccess.Entities;
+using MyBlog.Domain.Entities;
 
-namespace MyBlog.DataAccess
+namespace MyBlog.Repository
 {
     internal static class DbInitializer
     {

@@ -1,7 +1,5 @@
 <template>
-  <div class="child-view" style="height:100%">
-    <nuxt/>
-  </div>
+  <nuxt/>
 </template>
 
 <script>

@@ -22,8 +22,8 @@ namespace MyBlog
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DataAccess.BlogDbContext>();
-                    DataAccess.DbInitializer.Initialize(context);
+                    var context = services.GetRequiredService<Repository.BlogDbContext>();
+                    Repository.DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

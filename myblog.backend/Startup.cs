@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
-using MyBlog.DataAccess;
 #if DEBUG
 using Swashbuckle.AspNetCore.Swagger;
 #endif
@@ -39,7 +38,7 @@ namespace MyBlog
         {
             services.AddMemoryCache();
             services.AddMvc();
-            services.AddEntityFrameworkSqlite().AddDbContext<DataAccess.BlogDbContext>(
+            services.AddEntityFrameworkSqlite().AddDbContext<Repository.BlogDbContext>(
                 optionsBuilder => optionsBuilder.UseSqlite(Configuration.GetConnectionString("BlogDb")));
 
             services.AddAuthorization(options =>
@@ -94,7 +93,7 @@ namespace MyBlog
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterType<BlogDbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<Repository.BlogDbContext>().InstancePerLifetimeScope();
 
             Assembly self = GetType().Assembly;
             builder.RegisterAssemblyTypes(self).Where(t => !t.IsGenericType && t.FullName.StartsWith("MyBlog.Repository.")).AsImplementedInterfaces();

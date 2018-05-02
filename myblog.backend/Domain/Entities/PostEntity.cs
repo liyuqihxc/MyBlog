@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyBlog.DataAccess.Entities
+namespace MyBlog.Domain.Entities
 {
     public class PostEntity
     {
@@ -13,12 +13,12 @@ namespace MyBlog.DataAccess.Entities
         public string Content { get; set; }
 
         public int AnnouncerID { get; set; }
-        public virtual UserEntity Announcer { get; set; }
+        public UserEntity Announcer { get; set; }
 
         public int CategoryID { get; set; }
-        public virtual CategoryEntity Category { get; set; }
+        public CategoryEntity Category { get; set; }
 
-        public virtual ICollection<PostTagRelationEntity> TagRelations { get; set; }
+        public ICollection<PostTagRelationEntity> TagRelations { get; set; }
 
         public int? CoverImageID { get; set; }
 

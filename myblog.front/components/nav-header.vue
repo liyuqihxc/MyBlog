@@ -3,7 +3,7 @@
     <el-row>
       <el-col :md="{span:15,offset:4}" :sm="24">
         <div style="display:inline; float:left">
-          <img src="/static/img/avatar.jpg" class="avatar" />
+          <img src="/img/avatar.jpg" class="avatar" />
           <span class="site-desc">
               <h1>石榴骑士的小站</h1>
               <h2>面向工资编程</h2>

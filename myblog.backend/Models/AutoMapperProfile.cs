@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using MyBlog.DataAccess.Entities;
+using MyBlog.Domain.Entities;
 
 namespace MyBlog.Models
 {

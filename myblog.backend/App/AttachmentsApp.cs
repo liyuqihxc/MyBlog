@@ -8,8 +8,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBlog.Common;
-using MyBlog.DataAccess.Entities;
-using MyBlog.IRepository;
+using MyBlog.Domain.Entities;
+using MyBlog.Domain.IRepository;
 using MyBlog.Models;
 
 namespace MyBlog.App

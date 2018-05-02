@@ -4,8 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
-using MyBlog.DataAccess;
-using MyBlog.IRepository;
+using MyBlog.Domain.IRepository;
 
 namespace MyBlog.Repository
 {
@@ -60,45 +59,22 @@ namespace MyBlog.Repository
             _DbContext.SaveChanges();
         }
 
-        public virtual IQueryable<T> All()
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<T> All() => _DbContext.Set<T>();
 
-        public virtual T FirstOrDefault(Expression<Func<T, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
 
-        public virtual T First(Expression<Func<T, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().FirstOrDefault(predicate);
 
-        public virtual IQueryable<T> Where(Expression<Func<T, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        public T First(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().Find(predicate);
 
-        public virtual bool Any(Expression<Func<T, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<T> Where(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().Where(predicate);
 
-        public virtual IEnumerable<T> Except(IEnumerable<T> second)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Any(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().Any(predicate);
 
-        public virtual IEnumerable<T> Union(IEnumerable<T> second)
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<T> Except(IQueryable<T> second) => _DbContext.Set<T>().Except(second);
 
-        public virtual IEnumerable<T> Intersect(IEnumerable<T> second)
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<T> Union(IQueryable<T> second) => _DbContext.Set<T>().Union(second);
+
+        public IQueryable<T> Intersect(IQueryable<T> second) => _DbContext.Set<T>().Intersect(second);
 
         public IDbContextTransaction BeginTransaction()
         {

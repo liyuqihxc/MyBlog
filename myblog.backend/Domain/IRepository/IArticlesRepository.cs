@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using MyBlog.DataAccess.Entities;
+using MyBlog.Domain.Entities;
 
-namespace MyBlog.IRepository
+namespace MyBlog.Domain.IRepository
 {
     public interface IArticlesRepository : IBaseRepository<PostEntity>
     {

@@ -7,7 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlog.App;
-using MyBlog.DataAccess.Entities;
+using MyBlog.Domain.Entities;
 using MyBlog.Models;
 using Newtonsoft.Json.Linq;
 
