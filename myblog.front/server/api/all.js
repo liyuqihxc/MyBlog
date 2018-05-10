@@ -6,7 +6,8 @@ import fs from 'fs'
 const router = Router()
 const proxyurl = process.env.PROXY_URL
 
-router.all('/api/*', function (req, res) {
+router.all('/*', function (req, res, next) {
+  console.log('/api/*')
   var _This = this
   request({
     method: req.method,

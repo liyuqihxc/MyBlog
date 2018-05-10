@@ -6,6 +6,7 @@ const router = Router()
 const proxyurl = process.env.PROXY_URL
 
 router.post('/auth/login', function (req, res, next) {
+  // console.log('/api/auth/login')
   request({
     // agent: new Proxy('http://127.0.0.1:8888'),
     method: 'POST',
@@ -29,14 +30,5 @@ router.post('/auth/login', function (req, res, next) {
     }
   })
 })
-
-// router.get('/users/:id', function (req, res, next) {
-//   const id = parseInt(req.params.id)
-//   if (id >= 0 && id < users.length) {
-//     res.json(users[id])
-//   } else {
-//     res.sendStatus(404)
-//   }
-// })
 
 export default router

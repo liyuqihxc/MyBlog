@@ -15,7 +15,7 @@
         </el-menu-item>
         <el-submenu index="2">
             <template slot="title">文章分类</template>
-            <el-menu-item :index="'2-' + index" v-for="(m, index) in classes" :key="index" :route="m.url">{{m.name}}</el-menu-item>
+            <el-menu-item :index="'2-' + index" v-for="(cat, index) in categories" :key="index" :route="cat.url">{{ cat.label }}</el-menu-item>
         </el-submenu>
         <el-menu-item index="3">
             <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
@@ -32,7 +32,7 @@
 <script>
 export default {
   props: {
-    classes: {
+    categories: {
       type: Array,
       default () {
         return []
