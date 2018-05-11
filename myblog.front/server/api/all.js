@@ -7,15 +7,16 @@ const router = Router()
 const proxyurl = process.env.PROXY_URL
 
 router.all('/*', function (req, res, next) {
-  console.log('/api/*')
   var _This = this
+
+  var headers = { 'content-type': 'application/json' }
+  if (req.session.access_token) {
+    headers['Authorization'] = 'Bearer ' + req.session.access_token
+  }
   request({
     method: req.method,
     url: proxyurl + req.originalUrl,
-    headers: {
-      'content-type': 'application/json',
-      'Authorization': 'Bearer ' + req.session.access_token
-    },
+    headers,
     body: JSON.stringify(req.body)
   }, function (error, response, body) {
     if (typeof (response) === 'undefined') {
