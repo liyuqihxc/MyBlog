@@ -12,8 +12,7 @@
 <script>
 import sidenav from '@/components/side-nav'
 import postlist from '@/components/post-list'
-// import * as muta from '@/store/mutation-types'
-// import { mapState } from 'vuex'
+import { articles } from '@/api'
 
 export default {
   head: {
@@ -28,8 +27,8 @@ export default {
     }
   },
   async asyncData ({ params }) {
-    let { data } = await axios.get(`https://my-api/posts/${params.id}`)
-    return { title: data.title }
+    let payloadArticle = await articles
+    // return { title: data.title }
   }
 }
 </script>

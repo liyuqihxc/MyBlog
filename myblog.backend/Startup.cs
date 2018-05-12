@@ -20,6 +20,7 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using System.Reflection;
 using AutoMapper;
+using MyBlog.Common;
 
 namespace MyBlog
 {
@@ -37,7 +38,11 @@ namespace MyBlog
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddMvc();
+            services.AddMvc(setupAction => 
+            {
+                setupAction.Filters.Add(new ApiExceptionFilterAttribute());
+                setupAction.Filters.Add(new ApiActionFilterAttribute());
+            });
             services.AddEntityFrameworkSqlite().AddDbContext<Repository.BlogDbContext>(
                 optionsBuilder => optionsBuilder.UseSqlite(Configuration.GetConnectionString("BlogDb")));
 

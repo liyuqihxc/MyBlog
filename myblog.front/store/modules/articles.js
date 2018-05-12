@@ -1,42 +1,26 @@
 import * as muta from '../mutation-types'
-import http from '@/utility/http'
+import { articles as articlesApi } from '@/api'
 
 const actions = {
-  async [muta.AC_ARTICLES_FETCH_ALL] ({ commit, state }, params) {
-    let payload = await http.fetch('/api/articles/list', { params })
-    commit(muta.MU_ARTICLES_UPDATE_PAGING, payload)
-  },
   async [muta.AC_ARTICLES_FETCH_ALL_CATEGORIES_AND_TAGS] ({ commit, state }) {
-    let payloadCats = await http.fetch('/api/articles/allcategories')
-    let payloadTags = await http.fetch('/api/articles/alltags')
-    commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, { payloadTags, payloadCats })
-  },
-  async [muta.AC_ARTICLES_ADD_NEW] ({ commit, state }, { title, category, tags, content }) {
-    await http.post('/api/articles/addnew', { title, category, tags, content })
-  },
-  async [muta.AC_ARTICLES_LOAD_ARTICLE] ({ commit, state }, id) {
-    let result = await http.fetch('/api/articles/loadarticle', { params: { id } })
-    return result
+    let payloadCats = await articlesApi.loadCategories()
+    let payloadTags = await articlesApi.loadTags()
+    commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, {
+      tags: payloadTags.data,
+      cats: payloadCats.data
+    })
   }
 }
 
 const mutations = {
-  [muta.MU_ARTICLES_UPDATE_PAGING] (state, payload) {
-    state.articlePaging.list = payload.data
-    state.articlePaging.totalPage = payload.totalPage
-  },
-  [muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES] (state, { payloadTags, payloadCats }) {
-    state.allTags = payloadTags
-    state.allCategories = payloadCats
+  [muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES] (state, { tags, cats }) {
+    state.allTags = tags
+    state.allCategories = cats
   }
 }
 
 const articles = {
   state: {
-    articlePaging: {
-      list: [],
-      totalPage: 0
-    },
     allTags: [],
     allCategories: []
   },

@@ -1,36 +1,32 @@
 import * as muta from '../mutation-types'
-import http from '@/utility/http'
+import { auth as authApi } from '@/api'
 
 const actions = {
   /* eslint-disable-next-line */
-  async [muta.AC_LOGIN] ({ commit, state }, { username, password, g_recaptcha_response }) {
-    let jwt = await http.post('/api/auth/login', { username, password, g_recaptcha_response })
-    commit(muta.MU_LOGIN, jwt)
-  },
-  async loadAccessToken ({ commit, state }, arg) {
-
+  async [muta.AC_LOGIN] ({ commit, state }, params) {
+    let payload = await authApi.login('/api/auth/login', params)
+    commit(muta.MU_LOGIN, payload.data)
   }
 }
 
 const mutations = {
-  [muta.MU_LOGIN] (state, jwt) {
-    if (!jwt.access_token) {
+  [muta.MU_LOGIN] (state, { Message, StatusCode, Data }) {
+    if (StatusCode === 0) {
       state.checkForBots = true
-      return
+    } else if (StatusCode >= 1) {
+      state.logined = true
     }
-    state.logined = true
-    window.localStorage.setItem('access_token', JSON.stringify(jwt))
   }
 }
 
-const authentication = {
+const auth = {
   state: {
     logined: false, // 登录后状态为true
     checkForBots: false,
-    access_token: ''
+    username: ''
   },
   actions,
   mutations
 }
 
-export default authentication
+export default auth

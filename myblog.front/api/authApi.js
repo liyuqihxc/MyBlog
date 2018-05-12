@@ -1,4 +1,4 @@
-import http from '@/common/http'
+import http from '@/utility/http'
 
 export default {
   /* eslint-disable-next-line */
