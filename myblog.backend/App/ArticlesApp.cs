@@ -60,7 +60,7 @@ namespace MyBlog.App
 
                 return new PagingModel<IEnumerable<ArticleModel>>
                 {
-                    TotalPage = (total / count) + (total % count) == 0 ? 0 : 1,
+                    TotalNum = total,
                     CurrentPage = page,
                     Data = _Mapper.Map<IEnumerable<ArticleModel>>(result)
                 };

@@ -5,12 +5,12 @@
       <p class="post-date">{{ article.createDate }}&nbsp;-&nbsp;{{ article.announcer }}</p>
       <div class="tags">
         <fa-icon :icon="['fas','tags']"></fa-icon>
-        <router-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts/tags/${tags.find(e => e.key === tag)['label']}`}">
+        <!-- <router-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts?tags=/${tags.find(e => e.key === tag)['label']}`}">
           <span class="tag padded-sm img-rounded margin-sm-right">{{ tags.find(e => e.key === tag)['label'] }}</span>
-        </router-link>
+        </router-link> -->
       </div>
       <div class="clearfix">
-        <img :src="'/api/attachments/images?id='.concat(article.coverImageID)" class="pull-left margin-right">
+        <img :src="'/api/attachments/images?id='.concat(article.coverImageID)" class="pull-left margin-right" />
         <div> {{ convertMakrdown(article.content) }}</div>
       </div>
       <div class="continue-reading clearfix">
@@ -31,6 +31,18 @@ export default {
     'totalPage',
     'tags'
   ],
+  // created () {
+  //   console.log('created')
+  //   console.log(this.tags)
+  //   console.log(this.articles)
+  //   console.log(this.loading)
+  // },
+  mounted () {
+    console.log('post-list.mounted')
+    console.log(this.tags)
+    console.log(this.articles)
+    console.log(this.loading)
+  },
   methods: {
     convertMakrdown (str) {
       return Converter.makeHtml(str).replace(/<[^>]+>/g, '')

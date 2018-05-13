@@ -19,25 +19,23 @@ import * as muta from '@/store/mutation-types'
 import { mapState } from 'vuex'
 
 export default {
-  // async asyncData ({ req, params }) {
-  //   let cats = await axios.get('/api/categories')
-  //   return {
-  //     cats: ''
-  //   }
-  // },
+  async fetch ({ store, params }) {
+    // let _This = this
+    console.log('default.fetch')
+    await store.dispatch(muta.AC_ARTICLES_FETCH_ALL_CATEGORIES_AND_TAGS)
+    console.log(store.state.articles)
+  },
   computed: mapState({
     menu: function (state) {
       let Menus = []
-      state.articles.allCategories.forEach(m => {
-        Menus.push({ label: m.label, url: '/' })
-      })
+      if (state.articles.allCategories) {
+        state.articles.allCategories.forEach(m => {
+          Menus.push({ label: m.label, url: '/' })
+        })
+      }
       return Menus
     }
   }),
-  created () {
-    let _This = this
-    _This.$store.dispatch(muta.AC_ARTICLES_FETCH_ALL_CATEGORIES_AND_TAGS)
-  },
   components: {
     'nav-header': NavHeader,
     'site-footer': SiteFooter
@@ -50,7 +48,7 @@ export default {
       'class': 'background blog'
     }
   },
-  mounted: function () {
+  created () {
     let _This = this
     global.eventBus.$on('notify', (msg) => {
       _This.$notify({

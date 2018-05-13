@@ -40,8 +40,8 @@ namespace MyBlog
             services.AddMemoryCache();
             services.AddMvc(setupAction => 
             {
-                setupAction.Filters.Add(new ApiExceptionFilterAttribute());
-                setupAction.Filters.Add(new ApiActionFilterAttribute());
+                setupAction.Filters.Add<ApiExceptionFilterAttribute>();
+                //setupAction.Filters.Add<ApiActionFilterAttribute>();
             });
             services.AddEntityFrameworkSqlite().AddDbContext<Repository.BlogDbContext>(
                 optionsBuilder => optionsBuilder.UseSqlite(Configuration.GetConnectionString("BlogDb")));

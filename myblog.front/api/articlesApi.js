@@ -1,24 +1,30 @@
 import http from '@/utility/http'
 
 export default {
-  listAll (params) {
-    let result = http.fetch('/api/articles/list', { params })
+  async listAll (page, count) {
+    let result = await http.fetch('/api/articles/list', {
+      params: { page, count }
+    })
     return result
   },
-  loadCategories () {
-    return http.fetch('/api/articles/allcategories')
+  async loadCategories () {
+    let result = await http.fetch('/api/articles/allcategories')
+    return result
   },
-  loadTags () {
-    return http.fetch('/api/articles/alltags')
+  async loadTags () {
+    let result = await http.fetch('/api/articles/alltags')
+    return result
   },
   async addNewPost (params) {
-    return http.post('/api/articles/addnew', params)
+    let result = await http.post('/api/articles/addnew', params)
+    return result
   },
-  loadArticle (id) {
-    return http.fetch('/api/articles/loadarticle', {
+  async loadArticle (id) {
+    let result = await http.fetch('/api/articles/loadarticle', {
       params: {
         id
       }
     })
+    return result
   }
 }

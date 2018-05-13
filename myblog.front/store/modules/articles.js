@@ -6,8 +6,8 @@ const actions = {
     let payloadCats = await articlesApi.loadCategories()
     let payloadTags = await articlesApi.loadTags()
     commit(muta.MU_ARTICLES_UPDATE_TAGS_CATEGORIES, {
-      tags: payloadTags.data,
-      cats: payloadCats.data
+      tags: payloadTags,
+      cats: payloadCats
     })
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <el-row>
-      <el-col :md="{span:15,offset:4}" :sm="24" style="display:none">
+      <el-col :md="{span:15,offset:4}" :sm="24">
         <div style="display:inline; float:left">
           <img src="/img/avatar.jpg" class="avatar" />
           <span class="site-desc">

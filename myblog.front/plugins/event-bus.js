@@ -7,4 +7,6 @@ import Vue from 'vue'
 // }
 
 // Vue.use(eventBus)
-global.eventBus = new Vue()
+export default () => {
+  global.eventBus = new Vue()
+}

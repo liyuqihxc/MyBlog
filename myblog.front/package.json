@@ -26,7 +26,7 @@
     "express-session": "^1.15.6",
     "highlight.js": "^9.12.0",
     "node-sass": "^4.9.0",
-    "nuxt": "^1.0.0-rc3",
+    "nuxt": "^1.4.0",
     "postcss-loader": "^2.1.4",
     "sass-loader": "^7.0.1",
     "showdown": "^1.8.6",
