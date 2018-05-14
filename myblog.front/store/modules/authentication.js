@@ -5,7 +5,7 @@ const actions = {
   /* eslint-disable-next-line */
   async [muta.AC_LOGIN] ({ commit, state }, params) {
     let payload = await authApi.login('/api/auth/login', params)
-    commit(muta.MU_LOGIN, payload.data)
+    commit(muta.MU_LOGIN, payload)
   }
 }
 

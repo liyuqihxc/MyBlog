@@ -24,10 +24,10 @@ module.exports = {
     proxyUrl: process.env.PROXY_URL || 'http://127.0.0.1:18089'
   },
   plugins: [
-    '~/plugins/axios.js',
-    '~/plugins/event-bus.js',
-    '~/plugins/element-ui.js',
-    '~/plugins/fontawesome.js'
+    { src: '~/plugins/axios.js', ssr: true },
+    { src: '~/plugins/event-bus.js', ssr: false },
+    { src: '~/plugins/element-ui.js', ssr: true },
+    { src: '~/plugins/fontawesome.js', ssr: false }
   ],
   build: {
     analyze: true,

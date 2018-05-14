@@ -15,15 +15,15 @@
 <script>
 import NavHeader from '@/components/nav-header'
 import SiteFooter from '@/components/site-footer'
-import * as muta from '@/store/mutation-types'
+// import * as muta from '@/store/mutation-types'
 import { mapState } from 'vuex'
 
 export default {
-  async fetch ({ store, params }) {
-    // let _This = this
-    console.log('default.fetch')
-    await store.dispatch(muta.AC_ARTICLES_FETCH_ALL_CATEGORIES_AND_TAGS)
-    console.log(store.state.articles)
+  fetch () {
+    return new Promise(function (resolve, reject) {
+      // layout组件的 fetch 方法似乎是不会被调用的
+      resolve()
+    })
   },
   computed: mapState({
     menu: function (state) {
@@ -48,8 +48,9 @@ export default {
       'class': 'background blog'
     }
   },
-  created () {
+  beforeMount () {
     let _This = this
+    // console.log('default.beforeMount')
     global.eventBus.$on('notify', (msg) => {
       _This.$notify({
         title: msg.title,
