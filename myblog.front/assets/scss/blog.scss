@@ -45,17 +45,22 @@
 				padding-bottom: 0.1em;
 				font-size: 1.3em;
 			}
+
+			.post-info {
+				border-bottom: 1px solid $post-border-color;
+			}
 			
 			.post-date{
 				color: $meta-color;
 				padding-bottom: 0.1em;
 				margin: 0.5em 0;
+				display: inline-block;
 			}
 			
 			.tags{
-				margin-bottom: 5px;
 				padding-bottom: 10px;
-				border-bottom: 1px solid $post-border-color;
+				display: inline-block;
+				margin-left: 0.7em;
 			}
 			
 			.margin-left{

@@ -24,6 +24,7 @@ module.exports = {
     proxyUrl: process.env.PROXY_URL || 'http://127.0.0.1:18089'
   },
   plugins: [
+    { src: '~/plugins/directives.js', ssr: false },
     { src: '~/plugins/axios.js', ssr: true },
     { src: '~/plugins/event-bus.js', ssr: false },
     { src: '~/plugins/element-ui.js', ssr: true },
