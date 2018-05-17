@@ -18,7 +18,7 @@ module.exports = {
   ],
   loading: {
     color: 'cyan',
-    height: '4px'
+    height: '3px'
   },
   env: {
     proxyUrl: process.env.PROXY_URL || 'http://127.0.0.1:18089'

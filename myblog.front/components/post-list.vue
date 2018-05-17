@@ -5,8 +5,8 @@
       <div class="post-info">
         <p class="post-date">{{ article.createDate }}&nbsp;-&nbsp;{{ article.announcer }}</p>
         <div class="tags">
-          <!-- <fa-icon :icon="['fas','tags']"></fa-icon> -->
-          <router-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts?tags=${tags.find(e => e.key === tag)['label']}`}">
+          <fa-icon :icon="['fas','tags']" class="icon-tag"></fa-icon>
+          <router-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts?tag=${tags.find(e => e.key === tag)['label']}`}">
             <span class="tag padded-sm img-rounded margin-sm-right">{{ tags.find(e => e.key === tag)['label'] }}</span>
           </router-link>
         </div>
