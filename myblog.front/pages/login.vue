@@ -1,6 +1,5 @@
 <template>
-  <el-container style="height:100%">
-    <el-main>
+  <el-container>
       <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
         <h3 class="title">博主登录</h3>
         <el-form-item prop="account">
@@ -16,10 +15,6 @@
         </el-form-item>
       </el-form>
       <remote-js src="https://www.recaptcha.net/recaptcha/api.js"></remote-js>
-    </el-main>
-    <el-footer class="no-padding">
-      <site-footer />
-    </el-footer>
   </el-container>
 </template>
 
@@ -61,7 +56,7 @@ export default {
     'site-footer': SiteFooter,
     'remote-js': {
       render (createElement) {
-        return createElement('script', {attrs: { type: 'text/javascript', src: this.src, async: null, defer: null }})
+        return createElement('script', {attrs: { type: 'text/javascript', src: this.src, async: 'async', defer: 'defer' }})
       }
     }
   },
@@ -98,6 +93,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.el-header {
+  display: none;
+}
+</style>
 
 <style lang="scss" scoped>
 .login-container {

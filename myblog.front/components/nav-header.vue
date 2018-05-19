@@ -5,23 +5,23 @@
         <div style="display:inline; float:left">
           <img src="/img/avatar.jpg" class="avatar" />
           <span class="site-desc">
-              <h1>石榴骑士的小站</h1>
-              <h2>面向工资编程</h2>
+            <h1>石榴骑士的小站</h1>
+            <h2>面向工资编程</h2>
           </span>
         </div>
         <el-menu style="border:0; float:right" mode="horizontal" background-color="#383F42" text-color="#fff" active-text-color="#ffd04b">
         <el-menu-item index="1">
-            博客
+          博客
         </el-menu-item>
         <el-submenu index="2">
-            <template slot="title">文章分类</template>
-            <el-menu-item :index="'2-' + index" v-for="(cat, index) in categories" :key="index" :route="cat.url">{{ cat.label }}</el-menu-item>
+          <template slot="title">文章分类</template>
+          <el-menu-item :index="'2-' + index" v-for="(cat, index) in categories" :key="index" :route="cat.url">{{ cat.label }}</el-menu-item>
         </el-submenu>
         <el-menu-item index="3">
-            <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
+          <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
         </el-menu-item>
         <el-menu-item index="4">
-            <a href="https://github.com/liyuqihxc" title="关注GitHub"><fa-icon :icon="['fab','github']" size="lg"/></a>
+          <a href="https://github.com/liyuqihxc" title="关注GitHub"><fa-icon :icon="['fab','github']" size="lg"/></a>
         </el-menu-item>
         </el-menu>
       </el-col>
