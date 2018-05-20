@@ -22,6 +22,11 @@ import '@/assets/scss/article.scss'
 const Converter = new showdown.Converter()
 
 export default {
+  head () {
+    return {
+      title: this.article.title
+    }
+  },
   async asyncData ({ route }) {
     let article = await articlesApi.loadArticle(route.params.postid)
     return { article }

@@ -30,7 +30,7 @@ export default {
       let Menus = []
       if (state.articles.allCategories) {
         state.articles.allCategories.forEach(m => {
-          Menus.push({ label: m.label, url: '/' })
+          Menus.push({ label: m.label, url: `/posts/${m.label}` })
         })
       }
       return Menus

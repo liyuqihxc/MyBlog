@@ -30,7 +30,7 @@ export default {
   //   })
   // },
   head: {
-    title: '石榴骑士的小站 - 博客首页'
+    title: '博客首页'
   },
   components: {
     'side-nav': sidenav,

@@ -1,15 +1,15 @@
 <template>
   <div class="editor">
     <div class="editor-title">
-        <input type="text" v-model="value.title" placeholder="文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
+        <input type="text" v-model="value.title" placeholder="请输入文章标题" autocomplete="off" tabindex="1" spellcheck="false" maxlength="128" />
     </div>
     <div class="editor-toolbar">
-      <el-button-group>
+      <el-button-group style="margin-right:5px">
         <el-button @click="togglePreview" v-if="!preview"><fa-icon :icon="['far','file-alt']"/>&nbsp;预览</el-button>
         <el-button @click="togglePreview" v-if="preview"><fa-icon :icon="['far','file-alt']"/>&nbsp;编辑</el-button>
         <el-button @click="riseSaveEvent"><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
       </el-button-group>
-      <el-select v-model="value.category" size="small" placeholder="请选择分类">
+      <el-select style="margin-right:5px" v-model="value.category" size="small" placeholder="请选择分类">
         <el-option
           v-for="item in categories"
           :key="item.key"
@@ -17,7 +17,7 @@
           :value="item.key">
         </el-option>
       </el-select>
-      <el-select multiple filterable remote reserve-keyword :multiple-limit="3" :remote-method="filterTags" v-model="value.tags" size="small" placeholder="请选择标签">
+      <el-select style="margin-right:5px" multiple filterable remote reserve-keyword :multiple-limit="3" :remote-method="filterTags" v-model="value.tags" size="small" placeholder="请选择标签">
         <el-option
           v-for="item in tags"
           :key="item.key"
@@ -25,7 +25,7 @@
           :value="item.key">
         </el-option>
       </el-select>
-      <el-button-group>
+      <el-button-group style="margin-right:5px">
         <el-button><fa-icon :icon="['far','paper-plane']"/>&nbsp;发布</el-button>
       </el-button-group>
       <el-dropdown style="float:right">
@@ -49,7 +49,6 @@
 
 <script>
 import showdown from 'showdown'
-import highlight from '@/directives/highlight'
 import 'highlight.js/styles/default.css'
 import '@/assets/scss/article.scss'
 const Converter = new showdown.Converter()
@@ -60,9 +59,6 @@ export default {
     'categories',
     'value'
   ],
-  directives: {
-    highlight
-  },
   data () {
     return {
       preview: false

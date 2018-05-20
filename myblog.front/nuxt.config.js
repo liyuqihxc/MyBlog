@@ -1,7 +1,7 @@
 module.exports = {
   // https://github.com/justyeh/justyeh.com
   head: {
-    title: 'starter',
+    titleTemplate: '%s - 石榴骑士的小站',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

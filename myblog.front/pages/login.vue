@@ -24,6 +24,9 @@ import { mapState } from 'vuex'
 import * as muta from '@/store/mutation-types'
 
 export default {
+  head: {
+    title: '博主登录'
+  },
   data () {
     return {
       logining: false,
