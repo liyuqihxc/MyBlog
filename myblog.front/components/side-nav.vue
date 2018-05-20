@@ -1,20 +1,27 @@
 <template>
   <div class="sidebar-nav">
     <h2>博客</h2>
-    <ul class="list-unstyled"><li><h3><router-link to="posts">最近文章</router-link></h3></li></ul>
+    <ul class="list-unstyled"><li><h3><nuxt-link to="/posts">最近文章</nuxt-link></h3></li></ul>
     <h2>所有分类</h2>
     <ul class="list-unstyled">
+      <li v-for="cat in categories" :key="cat.key">
+        <h3><a href="javascript:void(0)">{{ cat.label }}</a></h3>
+      </li>
       <li>
+        <h3><a href="javascript:void(0)">所有草稿</a></h3>
+      </li>
+      <li>
+        <h3><a href="javascript:void(0)">回收站</a></h3>
       </li>
     </ul>
     <h2>相关博文</h2>
     <div style="margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #C5DAE8;">
         <i class="fa fa-tag"></i>
-        <router-link to="/"><span class="tag padded-sm img-rounded margin-sm-right">GitHub</span></router-link>
+        <nuxt-link to="/"><span class="tag padded-sm img-rounded margin-sm-right">GitHub</span></nuxt-link>
     </div>
     <div class="clearfix">
       <h3>
-          <router-link to="/">借助GitHub Pages配合Jekyll构建个人博客站点</router-link>
+          <nuxt-link to="/">借助GitHub Pages配合Jekyll构建个人博客站点</nuxt-link>
       </h3>
       <img src="/img/2015-04-22-Github_feature.webp" class="feature-image-small pull-left">
       <div>
@@ -33,7 +40,7 @@ export default {
         return []
       }
     },
-    classes: {
+    categories: {
       type: Array,
       default () {
         return []
@@ -68,7 +75,7 @@ export default {
     }
     h3{
         font-size: 1.15em;
-        margin: 0;
+        margin: 5px 0;
         padding: 0 0 0 6px;
     }
     h4{

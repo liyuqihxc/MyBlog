@@ -4,13 +4,13 @@
       <post-list :articles="articles" :loading="loading" :totalPage="totalPage" :tags="$store.state.articles.allTags" />
     </el-col>
     <el-col :lg="8" class="hidden-md-and-down">
-      <side-nav />
+      <side-nav :categories="allCategories" />
     </el-col>
   </el-row>
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 import sidenav from '@/components/side-nav'
 import postlist from '@/components/post-list'
@@ -43,10 +43,11 @@ export default {
       totalPage: 0
     }
   },
-  // computed: mapState({
-  //   loading: state => state.articles.allTags.length === 0,
-  //   allTags: state => state.articles.allTags
-  // }),
+  computed: mapState({
+    // loading: state => state.articles.allTags.length === 0,
+    // allTags: state => state.articles.allTags,
+    allCategories: state => state.articles.allCategories
+  }),
   mounted () {
     this.loading = false
   }

@@ -1,14 +1,14 @@
 <template>
   <div class="article-list">
     <div class="post" v-if="!loading" v-for="(article,ia) in articles" :key="ia">
-      <h1><router-link :to="{path:`/posts/viewpost/${article.id}`}">{{ article.title }}</router-link></h1>
+      <h1><nuxt-link :to="{path:`/posts/viewpost/${article.id}`}">{{ article.title }}</nuxt-link></h1>
       <div class="post-info">
         <p class="post-date">{{ article.createDate }}&nbsp;-&nbsp;{{ article.announcer }}</p>
         <div class="tags">
           <fa-icon :icon="['fas','tags']" class="icon-tag"></fa-icon>
-          <router-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts?tag=${tags.find(e => e.key === tag)['label']}`}">
+          <nuxt-link v-for="tag in article.tags" :key="tag" :to="{path:`/posts?tag=${tags.find(e => e.key === tag)['label']}`}">
             <span class="tag padded-sm img-rounded margin-sm-right">{{ tags.find(e => e.key === tag)['label'] }}</span>
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
       <div class="clearfix">
@@ -16,7 +16,7 @@
         <div> {{ convertMakrdown(article.content) }}</div>
       </div>
       <div class="continue-reading clearfix">
-        <router-link class="pull-right el-button el-button--primary" :to="{path:`/posts/viewpost/${article.id}`}" tag="button">Read More</router-link>
+        <nuxt-link class="pull-right el-button el-button--primary" :to="{path:`/posts/viewpost/${article.id}`}" tag="button">Read More</nuxt-link>
       </div>
     </div>
   </div>

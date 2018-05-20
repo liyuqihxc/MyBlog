@@ -13,7 +13,7 @@
           <el-menu-item index="1">
             <nuxt-link to="/posts">博客</nuxt-link>
           </el-menu-item>
-          <el-submenu index="2">
+          <el-submenu index="2" :popper-append-to-body="false">
             <template slot="title">文章分类</template>
             <nuxt-link :to="{path: cat.url}" v-for="(cat, index) in categories" :key="index">
               <el-menu-item :index="'2-' + index">{{ cat.label }}</el-menu-item>
@@ -80,15 +80,15 @@ export default {
   .el-menu {
     .el-menu-item {
       &:hover {
-        color: rgb(255, 208, 75) !important;
-        border-bottom-color: rgb(255, 208, 75) !important;
-        background-color: rgb(56, 63, 66) !important;
+        color: #ffd04b !important;
+        border-bottom-color: #ffd04b !important;
+        background-color: #383F42 !important;
       }
 
       &:focus:not(:hover), &.is-active:not(:hover) {
-        color: rgb(255, 255, 255) !important;
+        color: white !important;
         border-bottom-color: transparent !important;
-        background-color: rgb(56, 63, 66) !important;
+        background-color: #383F42 !important;
       }
     }
   }
@@ -99,9 +99,9 @@ export default {
 .navbar {
   .el-submenu {
     .el-submenu__title {
-      color: rgb(255, 255, 255) !important;
+      color: white !important;
       border-bottom-color: transparent !important;
-      background-color: rgb(56, 63, 66) !important;
+      background-color: #383F42 !important;
     }
   }
 }
