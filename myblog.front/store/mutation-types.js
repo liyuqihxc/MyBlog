@@ -1,5 +1,6 @@
 export const AC_LOGIN = 'Login'
 export const MU_LOGIN = 'Login'
+export const MU_CHECKFORBOTS = 'CheckForBots'
 
 export const MU_ARTICLES_UPDATE_PAGING = 'Articles_Update_Paging'
 export const MU_ARTICLES_UPDATE_TAGS_CATEGORIES = 'Articles_Update_Tags_Categories'

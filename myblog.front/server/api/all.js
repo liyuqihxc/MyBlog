@@ -19,7 +19,13 @@ router.all('/*', function (req, res, next) {
     url: url.resolve(proxyurl, req.originalUrl),
     headers,
     body: JSON.stringify(req.body)
+  }, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      // console.log(req.session);
+    } else {
+    }
   }).pipe(res)
+  res.removeHeader('server')
 })
 
 export default router

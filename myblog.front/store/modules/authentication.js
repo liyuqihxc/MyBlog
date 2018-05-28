@@ -16,6 +16,9 @@ const mutations = {
     } else if (StatusCode >= 1) {
       state.logined = true
     }
+  },
+  [muta.MU_CHECKFORBOTS] (state, checkForBots) {
+    state.checkForBots = checkForBots
   }
 }
 

@@ -14,6 +14,11 @@ router.post('/auth/login', function (req, res, next) {
     json: req.body
   }, function (error, response, body) {
     if (!error && response.statusCode === 200) {
+      if (body.access_token.length === 0) {
+        req.session.checkForBots = true
+        return
+      }
+      req.session.checkForBots = false
       req.session.access_token = body.access_token
       req.session.token_expires_on = body.expires_on
       // console.log(req.session);
