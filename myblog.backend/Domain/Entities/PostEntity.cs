@@ -23,5 +23,5 @@ namespace MyBlog.Domain.Entities
         public int? CoverImageID { get; set; }
 
         public ImageEntity CoverImage { get; set; }
-}
+    }
 }

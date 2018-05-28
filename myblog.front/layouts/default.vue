@@ -1,8 +1,38 @@
 <template>
   <div class="main-frame" style="height:100%">
     <el-container style="height:100%">
-      <el-header class="no-padding" style="margin-bottom:20px">
-        <nav-header :categories="menu" />
+      <el-header v-if="showHeader" class="no-padding" style="margin-bottom:20px">
+        <nav-header>
+          <template slot="menu">
+            <el-menu-item index="1">
+              <nuxt-link to="/posts">首页</nuxt-link>
+            </el-menu-item>
+            <el-submenu index="2" :popper-append-to-body="false">
+              <template slot="title">文章分类</template>
+              <nuxt-link :to="{path: cat.url}" v-for="(cat, index) in cats" :key="index">
+                <el-menu-item :index="'2-' + index">{{ cat.label }}</el-menu-item>
+              </nuxt-link>
+            </el-submenu>
+            <el-menu-item index="3" :v-if="!logined">
+              <nuxt-link to="/login">博主登录</nuxt-link>
+              <nuxt-link to="/global_config">
+                <el-menu-item index="3-1">博客设置</el-menu-item>
+              </nuxt-link>
+              <nuxt-link to="/logout">
+                <el-menu-item index="3-2">退出登录</el-menu-item>
+              </nuxt-link>
+            </el-menu-item>
+            <el-submenu index="3" :popper-append-to-body="false" v-if="logined">
+              <template slot="title">博主昵称</template>
+            </el-submenu>
+            <el-menu-item index="4">
+              <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
+            </el-menu-item>
+            <el-menu-item index="5">
+              <a href="https://github.com/liyuqihxc" title="关注GitHub" target="_blank"><fa-icon :icon="['fab','github']" size="lg"/></a>
+            </el-menu-item>
+          </template>
+        </nav-header>
       </el-header>
       <el-main class="no-padding" style="height:100%">
         <nuxt/>
@@ -25,17 +55,23 @@ export default {
       resolve()
     })
   },
-  computed: mapState({
-    menu: function (state) {
-      let Menus = []
-      if (state.articles.allCategories) {
-        state.articles.allCategories.forEach(m => {
-          Menus.push({ label: m.label, url: `/posts/${m.label}` })
-        })
-      }
-      return Menus
+  computed: {
+    ...mapState({
+      cats: function (state) {
+        let Menus = []
+        if (state.articles.allCategories) {
+          state.articles.allCategories.forEach(m => {
+            Menus.push({ label: m.label, url: `/posts/${m.label}` })
+          })
+        }
+        return Menus
+      },
+      logined: state => state.authentication.logined
+    }),
+    showHeader: function () {
+      return this.$route.name !== 'login'
     }
-  }),
+  },
   components: {
     'nav-header': NavHeader,
     'site-footer': SiteFooter
@@ -50,7 +86,6 @@ export default {
   },
   beforeMount () {
     let _This = this
-    // console.log('default.beforeMount')
     global.eventBus.$on('notify', (msg) => {
       _This.$notify({
         title: msg.title,
