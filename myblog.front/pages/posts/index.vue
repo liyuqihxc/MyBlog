@@ -4,7 +4,22 @@
       <post-list :articles="articles" :loading="loading" :totalPage="totalPage" :tags="$store.state.articles.allTags" />
     </el-col>
     <el-col :lg="8" class="hidden-md-and-down">
-      <side-nav :categories="allCategories" />
+      <side-nav>
+        <templete slot="categories">
+          <ul class="list-unstyled">
+            <li v-for="cat in allCategories" :key="cat.key">
+              <h3><a href="javascript:void(0)">{{ cat.label }}</a></h3>
+            </li>
+            <li>
+              <h3><a href="javascript:void(0)">所有草稿</a></h3>
+            </li>
+            <li>
+              <h3><a href="javascript:void(0)">回收站</a></h3>
+            </li>
+          </ul>
+        </templete>
+        <h2 slot="content_title">博文档案</h2>
+      </side-nav>
     </el-col>
   </el-row>
 </template>

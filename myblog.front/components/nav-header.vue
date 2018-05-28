@@ -11,7 +11,7 @@
         </div>
         <el-menu style="border:0; float:right" mode="horizontal" background-color="#383F42" text-color="#fff" active-text-color="#ffd04b">
           <el-menu-item index="1">
-            <nuxt-link to="/posts">博客</nuxt-link>
+            <nuxt-link to="/posts">首页</nuxt-link>
           </el-menu-item>
           <el-submenu index="2" :popper-append-to-body="false">
             <template slot="title">文章分类</template>
@@ -19,6 +19,9 @@
               <el-menu-item :index="'2-' + index">{{ cat.label }}</el-menu-item>
             </nuxt-link>
           </el-submenu>
+          <el-menu-item index="5">
+            <nuxt-link to="/login">博主登录</nuxt-link>
+          </el-menu-item>
           <el-menu-item index="3">
             <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
           </el-menu-item>
