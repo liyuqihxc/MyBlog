@@ -6,6 +6,8 @@ export default {
 
     if (req.session && req.session.checkForBots) {
       commit(muta.MU_CHECKFORBOTS, req.session.checkForBots)
+    } else if (req.session) {
+      req.session.checkForBots = true
     }
   }
 }

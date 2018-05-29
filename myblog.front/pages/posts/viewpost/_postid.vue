@@ -27,13 +27,13 @@
     </el-col>
     <el-col :lg="8" class="hidden-md-and-down">
       <side-nav>
-        <templete slot="categories">
+        <template slot="categories">
           <ul class="list-unstyled">
             <li v-for="cat in allCategories" :key="cat.key">
               <h3><a href="javascript:void(0)">{{ cat.label }}</a></h3>
             </li>
           </ul>
-        </templete>
+        </template>
         <div style="margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #C5DAE8;">
           <i class="fa fa-tag"></i>
           <nuxt-link to="/"><span class="tag padded-sm img-rounded margin-sm-right">GitHub</span></nuxt-link>

@@ -51,9 +51,10 @@ export default {
     checkForBots: state => state.authentication.checkForBots,
     logined: state => state.authentication.logined
   }),
-  beforeRouteUpdate (to, from, next) {
-    // react to route changes...
-    next()
+  middleware ({ store, redirect }) {
+    if (store.state.authentication.logined) {
+      return redirect('/')
+    }
   },
   components: {
     'site-footer': SiteFooter,
@@ -75,8 +76,10 @@ export default {
           let loginParams = {
             username: _This.ruleForm2.account,
             password: _This.ruleForm2.checkPass,
-            g_recaptcha_response: _This.widgetId ? window.grecaptcha.getResponse(_This.widgetId) : ''
+            g_recaptcha_response: window.grecaptcha.getResponse() || ''
           }
+          console.log(loginParams)
+          console.log(_This.widgetId)
           _This.$store.dispatch(muta.AC_LOGIN, loginParams).then(function () {
             _This.logining = false
             if (_This.logined) {

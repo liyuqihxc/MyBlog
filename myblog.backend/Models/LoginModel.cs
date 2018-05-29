@@ -7,6 +7,5 @@ namespace MyBlog.Models
     {
         public string username { get; set; }
         public string password { get; set; }
-        public string g_recaptcha_response { get; set; }
     }
 }

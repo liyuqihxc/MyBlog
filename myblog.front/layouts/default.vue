@@ -2,6 +2,7 @@
   <div class="main-frame" style="height:100%">
     <el-container style="height:100%">
       <el-header v-if="showHeader" class="no-padding" style="margin-bottom:20px">
+
         <nav-header>
           <template slot="menu">
             <el-menu-item index="1">
@@ -33,6 +34,7 @@
             </el-menu-item>
           </template>
         </nav-header>
+
       </el-header>
       <el-main class="no-padding" style="height:100%">
         <nuxt/>

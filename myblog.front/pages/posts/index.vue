@@ -5,7 +5,7 @@
     </el-col>
     <el-col :lg="8" class="hidden-md-and-down">
       <side-nav>
-        <templete slot="categories">
+        <template slot="categories">
           <ul class="list-unstyled">
             <li v-for="cat in allCategories" :key="cat.key">
               <h3><a href="javascript:void(0)">{{ cat.label }}</a></h3>
@@ -17,7 +17,7 @@
               <h3><a href="javascript:void(0)">回收站</a></h3>
             </li>
           </ul>
-        </templete>
+        </template>
         <h2 slot="content_title">博文档案</h2>
       </side-nav>
     </el-col>
