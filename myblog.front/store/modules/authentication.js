@@ -10,10 +10,10 @@ const actions = {
 }
 
 const mutations = {
-  [muta.MU_LOGIN] (state, { Message, StatusCode, Data }) {
-    if (StatusCode === 0) {
+  [muta.MU_LOGIN] (state, { succeeded, message }) {
+    if (succeeded === false) {
       state.checkForBots = true
-    } else if (StatusCode >= 1) {
+    } else if (succeeded === true) {
       state.logined = true
     }
   },

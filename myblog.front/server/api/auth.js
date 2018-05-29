@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import request from 'request'
-import Proxy from 'http-proxy-agent'
+// import Proxy from 'http-proxy-agent'
 import url from 'url'
 
 const router = Router()
@@ -8,16 +8,21 @@ const proxyurl = process.env.PROXY_URL
 
 const checkForBotsProc = function (recaptchaResponse, remoteAddress, callback, callbackState) {
   request({
-    agent: new Proxy('http://127.0.0.1:8888'),
     method: 'POST',
     url: 'https://www.recaptcha.net/recaptcha/api/siteverify',
     qs: {
-      secret: '',
+      secret: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
       response: recaptchaResponse,
       remoteip: remoteAddress
     }
   }, function (error, response, body) {
-    if (!error && response.statusCode === 200 && body.success) {
+    if (!error && response.statusCode === 200) {
+      var ret = JSON.parse(body)
+      console.log(body)
+      if (ret.success !== true) {
+        callbackState.originalResponse.json({ succeeded: false, message: '登录失败，recaptcha无法验证。' })
+        return
+      }
       callback(callbackState)
     }
   })
@@ -25,7 +30,7 @@ const checkForBotsProc = function (recaptchaResponse, remoteAddress, callback, c
 
 const loginProc = function ({originalRequest, originalResponse}) {
   request({
-    agent: new Proxy('http://127.0.0.1:8888'),
+    // agent: new Proxy('http://127.0.0.1:8888'),
     method: 'POST',
     url: url.resolve(proxyurl, '/api/auth/login'),
     json: originalRequest.body
@@ -35,7 +40,7 @@ const loginProc = function ({originalRequest, originalResponse}) {
     if (!error && response.statusCode === 200) {
       if (body.access_token.length === 0) {
         originalRequest.session.checkForBots = true
-        originalResponse.json({succeeded: true, message: '登录失败。'})
+        originalResponse.json({succeeded: false, message: '登录失败。'})
         return
       }
       originalRequest.session.checkForBots = false
@@ -53,7 +58,7 @@ router.post('/auth/login', function (req, res, next) {
   if (req.session.checkForBots && req.session.checkForBots === true) {
     checkForBotsProc(req.body.g_recaptcha_response, req.socket.remoteAddress, loginProc, {originalRequest: req, originalResponse: res})
   } else {
-    loginProc(req)
+    loginProc({originalRequest: req, originalResponse: res})
   }
 })
 

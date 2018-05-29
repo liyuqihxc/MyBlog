@@ -8,7 +8,7 @@
         <el-form-item prop="checkPass">
           <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
-        <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc5DlMUAAAAAEpS3STxlbnjO4kJvFVWQ2QZDGi3" v-if="checkForBots"></div>
+        <div id="recaptcha" class="g-recaptcha" v-if="checkForBots"></div>
         <el-form-item style="width:100%;">
           <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录</el-button>
           <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
@@ -52,8 +52,9 @@ export default {
     logined: state => state.authentication.logined
   }),
   middleware ({ store, redirect }) {
-    if (store.state.authentication.logined) {
-      return redirect('/')
+    if (store.state.authentication.logined === true) {
+      console.log('redirect')
+      return redirect('/posts')
     }
   },
   components: {
@@ -73,20 +74,22 @@ export default {
       _This.$refs.ruleForm2.validate((valid) => {
         if (valid) {
           _This.logining = true
+          let grecaptcha = ''
+          if (_This.checkForBots && window.grecaptcha.getResponse) {
+            grecaptcha = window.grecaptcha.getResponse()
+          }
           let loginParams = {
             username: _This.ruleForm2.account,
             password: _This.ruleForm2.checkPass,
-            g_recaptcha_response: window.grecaptcha.getResponse() || ''
+            g_recaptcha_response: grecaptcha
           }
-          console.log(loginParams)
-          console.log(_This.widgetId)
           _This.$store.dispatch(muta.AC_LOGIN, loginParams).then(function () {
             _This.logining = false
             if (_This.logined) {
               _This.$router.push({path: '/'})
             } else if (_This.checkForBots && window.grecaptcha) {
               _This.widgetId = window.grecaptcha.render('recaptcha', {
-                'sitekey': '6Lc5DlMUAAAAAEpS3STxlbnjO4kJvFVWQ2QZDGi3'
+                'sitekey': '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
               })
             }
           })
