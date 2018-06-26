@@ -83,7 +83,8 @@ export default {
       lang: 'zh-cn'
     },
     bodyAttrs: {
-      'class': 'background blog'
+      // 'class': 'background blog'
+      'class': 'blog'
     }
   },
   beforeMount () {

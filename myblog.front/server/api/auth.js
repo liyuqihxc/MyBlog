@@ -20,7 +20,7 @@ const checkForBotsProc = function (recaptchaResponse, remoteAddress, callback, c
       var ret = JSON.parse(body)
       console.log(body)
       if (ret.success !== true) {
-        callbackState.originalResponse.json({ succeeded: false, message: '登录失败，recaptcha无法验证。' })
+        callbackState.originalResponse.json({ succeeded: false, message: '登录失败，reCAPTCHA验证失败。' })
         return
       }
       callback(callbackState)

@@ -111,7 +111,7 @@ body{
 	font-family: $font-family;//"Source Sans Pro",Helvetica,Arial,sans-serif;
 	
 	&.background{
-		// background-image: url('/static/img/background.jpg');
+		background-image: url('/static/img/background.jpg');
 		background-repeat: no-repeat;
 		background-attachment:fixed;
 		background-size: cover;

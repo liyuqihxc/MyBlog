@@ -45,6 +45,7 @@ namespace MyBlog
                 {
                     if (hostContext.HostingEnvironment.IsDevelopment())
                         config.AddUserSecrets("Token.IssuerSigningKey");
+                    //dotnet user-secrets set Token.IssuerSigningKey
                 })
                 .Build();
         }
