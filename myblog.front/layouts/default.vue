@@ -14,18 +14,18 @@
                 <el-menu-item :index="'2-' + index">{{ cat.label }}</el-menu-item>
               </nuxt-link>
             </el-submenu>
-            <el-menu-item index="3" :v-if="!logined">
-              <nuxt-link to="/login">博主登录</nuxt-link>
+            <el-submenu index="3" :popper-append-to-body="false" v-if="logined">
+              <template slot="title">博主昵称</template>
               <nuxt-link to="/global_config">
                 <el-menu-item index="3-1">博客设置</el-menu-item>
               </nuxt-link>
               <nuxt-link to="/logout">
                 <el-menu-item index="3-2">退出登录</el-menu-item>
               </nuxt-link>
-            </el-menu-item>
-            <el-submenu index="3" :popper-append-to-body="false" v-if="logined">
-              <template slot="title">博主昵称</template>
             </el-submenu>
+            <el-menu-item index="3" v-else>
+              <nuxt-link to="/login">博主登录</nuxt-link>
+            </el-menu-item>
             <el-menu-item index="4">
               <a href="mailto:liyuqihxc@gmail.com" title="Email我"><fa-icon :icon="['fas','envelope']" size="lg"/></a>
             </el-menu-item>

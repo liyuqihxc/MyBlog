@@ -10,5 +10,9 @@ export default {
       req.session.checkForBots = true
       commit(muta.MU_CHECKFORBOTS, req.session.checkForBots)
     }
+
+    if (req.session && req.session.access_token) {
+      commit(muta.MU_LOGIN, { succeeded: true })
+    }
   }
 }

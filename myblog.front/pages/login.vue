@@ -23,6 +23,8 @@ import SiteFooter from '@/components/site-footer'
 import { mapState } from 'vuex'
 import * as muta from '@/store/mutation-types'
 
+const RecaptchaSitekey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+
 export default {
   head: {
     title: '博主登录'
@@ -53,7 +55,6 @@ export default {
   }),
   middleware ({ store, redirect }) {
     if (store.state.authentication.logined === true) {
-      console.log('redirect')
       return redirect('/posts')
     }
   },
@@ -63,6 +64,13 @@ export default {
       render (createElement) {
         return createElement('script', {attrs: { type: 'text/javascript', src: this.src, async: 'async', defer: 'defer' }})
       }
+    }
+  },
+  mounted () {
+    if (this.checkForBots) {
+      this.widgetId = window.grecaptcha.render('recaptcha', {
+        'sitekey': RecaptchaSitekey
+      })
     }
   },
   methods: {
@@ -75,7 +83,7 @@ export default {
         if (valid) {
           _This.logining = true
           let grecaptcha = ''
-          if (_This.checkForBots && window.grecaptcha.getResponse) {
+          if (_This.checkForBots && _This.widgetId !== '') {
             grecaptcha = window.grecaptcha.getResponse()
           }
           let loginParams = {
@@ -85,13 +93,7 @@ export default {
           }
           _This.$store.dispatch(muta.AC_LOGIN, loginParams).then(function () {
             _This.logining = false
-            if (_This.logined) {
-              _This.$router.push({path: '/'})
-            } else if (_This.checkForBots && window.grecaptcha) {
-              _This.widgetId = window.grecaptcha.render('recaptcha', {
-                'sitekey': '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-              })
-            }
+            window.location.reload(true)
           })
         } else {
           console.log('error submit!!')
