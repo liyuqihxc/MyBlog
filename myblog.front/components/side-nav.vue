@@ -1,7 +1,10 @@
 <template>
   <div class="sidebar-nav">
     <h2>博客</h2>
-    <ul class="list-unstyled"><li><h3><nuxt-link to="/posts">最近文章</nuxt-link></h3></li></ul>
+    <ul class="list-unstyled">
+      <li><h3><nuxt-link to="/posts">最近文章</nuxt-link></h3></li>
+      <slot name="custom_link"></slot>
+    </ul>
     <h2>所有分类</h2>
     <slot name="categories"></slot>
     <slot name="content_title"><h2>相关博文</h2></slot>

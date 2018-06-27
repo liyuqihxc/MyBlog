@@ -67,8 +67,9 @@ export default {
     }
   },
   mounted () {
-    if (this.checkForBots) {
-      this.widgetId = window.grecaptcha.render('recaptcha', {
+    let _This = this
+    if (_This.checkForBots) {
+      _This.widgetId = window.grecaptcha.render('recaptcha', {
         'sitekey': RecaptchaSitekey
       })
     }

@@ -35,14 +35,15 @@ const loginProc = function ({originalRequest, originalResponse}) {
     url: url.resolve(proxyurl, '/api/auth/login'),
     json: originalRequest.body
   }, function (error, response, body) {
-    delete response.headers['server']
+    if (response.statusCode === 401) {
+      originalRequest.session.checkForBots = true
+      originalResponse.json({succeeded: false, message: '登录失败。'})
+      return
+    }
 
     if (!error && response.statusCode === 200) {
-      if (body.access_token.length === 0) {
-        originalRequest.session.checkForBots = true
-        originalResponse.json({succeeded: false, message: '登录失败。'})
-        return
-      }
+      delete response.headers['server']
+
       originalRequest.session.checkForBots = false
       originalRequest.session.access_token = body.access_token
       originalRequest.session.token_expires_on = body.expires_on

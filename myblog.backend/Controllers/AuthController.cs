@@ -36,7 +36,7 @@ namespace MyBlog.Controllers
         {
             var user = await _AuthApp.Verify(Params.username, Params.password);
             if (user == null)
-                return Ok(new { access_token = "", expires_on = "" });
+                return Challenge();
 
             IEnumerable<Claim> claims = new[]
             {
@@ -56,7 +56,11 @@ namespace MyBlog.Controllers
                 signingCredentials: creds
             );
 
-            return Ok(new { access_token = new JwtSecurityTokenHandler().WriteToken(token), expires_on = DateTime.Now.AddDays(5) });
+            return Ok(new {
+                access_token = new JwtSecurityTokenHandler().WriteToken(token),
+                expires_on = DateTime.Now.AddDays(5),
+                nick_name = user.NickName
+            });
         }
 
         [HttpPost("signup")]
