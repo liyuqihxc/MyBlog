@@ -6,8 +6,9 @@
     <el-col :lg="8" class="hidden-md-and-down">
       <side-nav>
         <template slot="custom_link" v-if="logined">
-          <li><h3><a href="javascript:void(0)">所有草稿</a></h3></li>
-          <li><h3><a href="javascript:void(0)">回收站</a></h3></li>
+          <li><h3><nuxt-link to="/posts/drafts">所有草稿</nuxt-link></h3></li>
+          <li><h3><nuxt-link to="/posts/recycle">回收站</nuxt-link></h3></li>
+          <li><h3><nuxt-link to="/posts/newpost">新建博文</nuxt-link></h3></li>
         </template>
         <template slot="categories">
           <ul class="list-unstyled">

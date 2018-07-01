@@ -38,11 +38,7 @@ namespace MyBlog
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddMvc(setupAction => 
-            {
-                setupAction.Filters.Add<ApiExceptionFilterAttribute>();
-                //setupAction.Filters.Add<ApiActionFilterAttribute>();
-            });
+            services.AddMvc();
             services.AddEntityFrameworkSqlite().AddDbContext<Repository.BlogDbContext>(
                 optionsBuilder => optionsBuilder.UseSqlite(Configuration.GetConnectionString("BlogDb")));
 
@@ -123,6 +119,8 @@ namespace MyBlog
 
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthentication();
 

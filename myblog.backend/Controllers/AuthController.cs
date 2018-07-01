@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using MyBlog.App;
+using MyBlog.Common;
 using Microsoft.Extensions.Caching.Memory;
 using MyBlog.Models;
 
@@ -34,15 +35,25 @@ namespace MyBlog.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginModel Params)
         {
-            var user = await _AuthApp.Verify(Params.username, Params.password);
+            var user = await _AuthApp.Verify(Params.UserName, Params.Password);
             if (user == null)
                 return Challenge();
 
+            var timeNow = DateTime.UtcNow;
+
+            /*iss(Issuser)：代表这个JWT的签发主体；
+            sub(Subject)：代表这个JWT的主体，即它的所有人；
+            aud(Audience)：代表这个JWT的接收对象；
+            exp(Expiration time)：是一个时间戳，代表这个JWT的过期时间；
+            nbf(Not Before)：是一个时间戳，代表这个JWT生效的开始时间，意味着在这个时间之前验证JWT是会失败的；
+            iat(Issued at)：是一个时间戳，代表这个JWT的签发时间；
+            jti(JWT ID)：是JWT的唯一标识。*/
             IEnumerable<Claim> claims = new[]
             {
+                new Claim(ClaimTypes.Name, user.Name),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Name),
                 new Claim(JwtRegisteredClaimNames.Jti, user.SecurityStamp),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.NickName)
+                new Claim(JwtRegisteredClaimNames.Iat, timeNow.ToUnixTimestamp().ToString(), ClaimValueTypes.Integer64),
             };
 
             var key = new SymmetricSecurityKey(Guid.Parse(_Configuration["Token.IssuerSigningKey"]).ToByteArray());
@@ -52,7 +63,8 @@ namespace MyBlog.Controllers
                 issuer: _Configuration["Token:Issuer"],
                 audience: _Configuration["Token:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddDays(5),
+                notBefore: timeNow,
+                expires: timeNow.AddDays(5),
                 signingCredentials: creds
             );
 

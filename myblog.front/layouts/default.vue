@@ -15,7 +15,7 @@
               </nuxt-link>
             </el-submenu>
             <el-submenu index="3" :popper-append-to-body="false" v-if="logined">
-              <template slot="title">博主昵称</template>
+              <template slot="title">{{ userName }}</template>
               <nuxt-link to="/global_config">
                 <el-menu-item index="3-1">博客设置</el-menu-item>
               </nuxt-link>
@@ -68,7 +68,8 @@ export default {
         }
         return Menus
       },
-      logined: state => state.authentication.logined
+      logined: state => state.authentication.logined,
+      userName: state => state.authentication.username
     }),
     showHeader: function () {
       return this.$route.name !== 'login'
@@ -83,8 +84,8 @@ export default {
       lang: 'zh-cn'
     },
     bodyAttrs: {
-      // 'class': 'background blog'
-      'class': 'blog'
+      'class': 'background blog'
+      // 'class': 'blog'
     }
   },
   beforeMount () {

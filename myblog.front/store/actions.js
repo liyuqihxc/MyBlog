@@ -7,12 +7,12 @@ export default {
     if (req.session && req.session.checkForBots) {
       commit(muta.MU_CHECKFORBOTS, req.session.checkForBots)
     } else if (req.session) {
-      req.session.checkForBots = true
-      commit(muta.MU_CHECKFORBOTS, req.session.checkForBots)
+      // req.session.checkForBots = true
+      // commit(muta.MU_CHECKFORBOTS, req.session.checkForBots)
     }
 
     if (req.session && req.session.access_token) {
-      commit(muta.MU_LOGIN, { succeeded: true })
+      commit(muta.MU_LOGIN, { succeeded: true, nick_name: req.session.user_nick_name })
     }
   }
 }

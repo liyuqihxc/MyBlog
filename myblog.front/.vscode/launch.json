@@ -7,7 +7,19 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "npm run dev-debug",
+            "name": "Launch Program",
+            "program": "${workspaceRoot}\\build\\main.js",
+            "protocol": "inspector",
+            "env": {
+                "NODE_ENV": "development",
+                "PROXY_URL": "http://127.0.0.1:18089",
+                "DEBUG": "nuxt:*,app"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "launch via npm",
             "protocol": "inspector",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
@@ -17,8 +29,9 @@
             "port": 9229,
             "env": {
                 "NODE_ENV": "development",
-                "PROXY_URL": "http://127.0.0.1:18089"
+                "PROXY_URL": "http://127.0.0.1:18089",
+                "DEBUG": "nuxt:*,app"
             }
-      }
+        }
     ]
 }

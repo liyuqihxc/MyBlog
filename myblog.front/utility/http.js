@@ -37,6 +37,7 @@ export default {
       return result.data
     } catch (error) {
       handleHttpError(error)
+      throw error
     }
   },
   async put (url, data, config) {
@@ -45,6 +46,7 @@ export default {
       return result.data
     } catch (error) {
       handleHttpError(error)
+      throw error
     }
   },
   async post (url, data, config) {
@@ -53,6 +55,7 @@ export default {
       return result.data
     } catch (error) {
       handleHttpError(error)
+      throw error
     }
   },
   async delete (url, config) {
@@ -61,6 +64,7 @@ export default {
       return result.data
     } catch (error) {
       handleHttpError(error)
+      throw error
     }
   }
 }

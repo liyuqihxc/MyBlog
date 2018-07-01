@@ -15,8 +15,8 @@ export default {
     let result = await http.fetch('/api/articles/alltags')
     return result
   },
-  async addNewPost (params) {
-    let result = await http.post('/api/articles/addnew', params)
+  async addNewPost (title, tags, category, content) {
+    let result = await http.post('/api/articles/addnew', { title, tags, category, content })
     return result
   },
   async loadArticle (id) {

@@ -10,11 +10,14 @@ const actions = {
 }
 
 const mutations = {
-  [muta.MU_LOGIN] (state, { succeeded, message }) {
+  /* eslint-disable-next-line */
+  [muta.MU_LOGIN] (state, { succeeded, nick_name }) {
     if (succeeded === false) {
       state.checkForBots = true
     } else if (succeeded === true) {
       state.logined = true
+      /* eslint-disable-next-line */
+      state.username = nick_name
     }
   },
   [muta.MU_CHECKFORBOTS] (state, checkForBots) {

@@ -47,8 +47,9 @@ const loginProc = function ({originalRequest, originalResponse}) {
       originalRequest.session.checkForBots = false
       originalRequest.session.access_token = body.access_token
       originalRequest.session.token_expires_on = body.expires_on
+      originalRequest.session.user_nick_name = body.nick_name
       // console.log(originalRequest.session);
-      originalResponse.json({succeeded: true, message: '登录成功。'})
+      originalResponse.json({ succeeded: true, message: '登录成功。', nick_name: body.nick_name })
     } else {
       response.pipe(originalResponse)
     }

@@ -39,5 +39,15 @@ namespace MyBlog.Common
                 return ms.ToArray();
             }
         }
+
+        public static long ToUnixTimestamp(this DateTime date)
+        {
+            return (long)Math.Round(
+                (
+                    date.ToUniversalTime() -
+                    new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)
+                ).TotalSeconds
+            );
+        }
     }
 }

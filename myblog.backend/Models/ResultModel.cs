@@ -5,10 +5,8 @@ using System.Linq;
 
 namespace MyBlog.Models
 {
-    public class ResultModel
+    public class ExceptionModel
     {
-        public int StatusCode { get; set; }
-
         public string Message { get; set; }
 
         public object Data { get; set; }

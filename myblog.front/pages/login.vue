@@ -8,13 +8,13 @@
         <el-form-item prop="checkPass">
           <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
-        <div id="recaptcha" class="g-recaptcha" v-if="checkForBots"></div>
+        <div id="recaptcha" class="g-recaptcha" :data-sitekey="RecaptchaSitekey" v-if="checkForBots"></div>
         <el-form-item style="width:100%;">
           <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录</el-button>
           <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
         </el-form-item>
       </el-form>
-      <remote-js src="https://www.recaptcha.net/recaptcha/api.js"></remote-js>
+      <!-- <remote-js src="https://www.recaptcha.net/recaptcha/api.js"></remote-js> -->
   </el-container>
 </template>
 
@@ -32,6 +32,7 @@ export default {
   data () {
     return {
       logining: false,
+      RecaptchaSitekey,
       widgetId: '',
       ruleForm2: {
         account: 'admin',
@@ -69,10 +70,11 @@ export default {
   mounted () {
     let _This = this
     if (_This.checkForBots) {
-      _This.widgetId = window.grecaptcha.render('recaptcha', {
-        'sitekey': RecaptchaSitekey
-      })
+      _This.load_reCAPTCHA()
     }
+  },
+  beforeDestroy () {
+    document.getElementById('recaptchaScript').remove()
   },
   methods: {
     handleReset2 () {
@@ -94,13 +96,32 @@ export default {
           }
           _This.$store.dispatch(muta.AC_LOGIN, loginParams).then(function () {
             _This.logining = false
-            window.location.reload(true)
+            if (_This.logined === true) {
+              window.location.reload(true)
+            } else if (window.grecaptcha) {
+              // js已加载
+              window.grecaptcha.reset(_This.widgetId)
+            } else {
+              // js未加载
+              _This.load_reCAPTCHA()
+            }
           })
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    load_reCAPTCHA () {
+      let script = document.createElement('script')
+      script.id = 'recaptchaScript'
+      script.defer = true
+      script.async = true
+      script.src = 'https://www.recaptcha.net/recaptcha/api.js'
+      document.head.appendChild(script)
+      // _This.widgetId = window.grecaptcha.render('recaptcha', {
+      //   'sitekey': RecaptchaSitekey
+      // })
     }
   }
 }

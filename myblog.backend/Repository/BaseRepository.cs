@@ -64,7 +64,7 @@ namespace MyBlog.Repository
 
         public T FirstOrDefault(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().FirstOrDefault(predicate);
 
-        public T First(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().Find(predicate);
+        public T First(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().First(predicate);
 
         public IQueryable<T> Where(Expression<Func<T, bool>> predicate) => _DbContext.Set<T>().Where(predicate);
 

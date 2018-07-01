@@ -28,6 +28,8 @@ namespace MyBlog.Controllers
         public async Task<IActionResult> GetImage(int id)
         {
             var image = await _AttachmentsApp.GetImageById(id);
+            if (image == null)
+                return NotFound(new ExceptionModel { Message = "图片不存在。" });
             return File(image.Image, MimeTypeMap.GetMimeType(System.IO.Path.GetExtension(image.Name)));
         }
     }

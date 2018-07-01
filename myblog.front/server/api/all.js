@@ -6,21 +6,21 @@ import url from 'url'
 const router = Router()
 const proxyurl = process.env.PROXY_URL
 
-router.all('/*', function (req, res, next) {
+router.all('/*', function (req, res) {
   // var _This = this
 
   var headers = req.headers
   if (req.session.access_token) {
     headers['Authorization'] = 'Bearer ' + req.session.access_token
   }
-  request({
+  req.pipe(request({
     // agent: new Proxy('http://127.0.0.1:8888'),
     method: req.method,
     url: url.resolve(proxyurl, req.originalUrl),
     headers,
     body: JSON.stringify(req.body)
-  }).on('response', function (resp) {
-    delete resp.headers['server']
+  }), { end: false }).on('response', function (pres) {
+    delete pres.headers['server']
   }).pipe(res)
 })
 

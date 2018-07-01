@@ -7,7 +7,7 @@
 <script>
 import { mapState } from 'vuex'
 import showdown from '@/components/showdown-editor'
-import * as muta from '@/store/mutation-types'
+import { articles as articlesApi } from '@/api'
 
 export default {
   head: {
@@ -32,7 +32,16 @@ export default {
   }),
   methods: {
     savePost () {
-      this.$store.dispatch(muta.AC_ARTICLES_ADD_NEW, this.article)
+      articlesApi.addNewPost(
+        this.article.title,
+        this.article.tags,
+        this.article.category,
+        this.article.content
+      ).then(function (result) {
+        alert(result.message)
+      }).catch(function (error) {
+        console.error(error)
+      })
     }
   }
 }

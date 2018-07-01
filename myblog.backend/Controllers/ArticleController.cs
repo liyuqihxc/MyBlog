@@ -47,16 +47,12 @@ namespace MyBlog.Controllers
         [HttpGet, Route("alltags")]
         public Task<IEnumerable<TagEntity>> GetAllTags() => _ArticlesApp.GetAllTags();
 
-        //[Authorize]
+        [Authorize]
         [HttpPost, Route("addnew")]
-        public async Task<IActionResult> SaveNewPost([FromBody]dynamic Params)
+        public async Task<IActionResult> SaveNewPost([FromBody]NewArticleModel newPost)
         {
-            //string UserName = User.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
-            string title = (string)Params.title;
-            int[] tags = ((JArray)Params.tags).ToObject<int[]>();
-            int category = (int)Params.category;
-            string content = (string)Params.content;
-            await _ArticlesApp.AddNewArticle(title, category, tags, content, "admin");
+            string UserName = User.Identity.Name;
+            await _ArticlesApp.AddNewArticle(newPost.Title, newPost.Category, newPost.Tags, newPost.Content, "admin");
             return Ok("保存成功。");
         }
 
