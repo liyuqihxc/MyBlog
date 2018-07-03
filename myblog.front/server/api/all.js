@@ -19,7 +19,14 @@ router.all('/*', function (req, res) {
     url: url.resolve(proxyurl, req.originalUrl),
     headers,
     body: JSON.stringify(req.body)
-  }), { end: false }).on('response', function (pres) {
+  }), { end: false }).on('error', function (error) {
+    if (error.code === 'ECONNREFUSED') {
+      console.error('无法连接到后端服务，请检查后端程序是否启动。')
+      res.statusCode = 503
+      res.json({message: 'Service Unabailable.', data: null})
+      res.end()
+    }
+  }).on('response', function (pres) {
     delete pres.headers['server']
   }).pipe(res)
 })

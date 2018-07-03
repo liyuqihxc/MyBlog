@@ -5,16 +5,22 @@ const actions = {
   /* eslint-disable-next-line */
   async [muta.AC_LOGIN] ({ commit, state }, params) {
     let payload = await authApi.login(params)
-    commit(muta.MU_LOGIN, payload)
+    if (payload.data === null) {
+      global.eventBus.$emit('notify', {
+        title: '无法登陆',
+        message: payload.message,
+        type: 'error'
+      })
+    } else {
+      commit(muta.MU_LOGIN, payload)
+    }
   }
 }
 
 const mutations = {
   /* eslint-disable-next-line */
-  [muta.MU_LOGIN] (state, { succeeded, nick_name }) {
-    if (succeeded === false) {
-      state.checkForBots = true
-    } else if (succeeded === true) {
+  [muta.MU_LOGIN] (state, { succeeded, message, nick_name }) {
+    if (succeeded === true) {
       state.logined = true
       /* eslint-disable-next-line */
       state.username = nick_name

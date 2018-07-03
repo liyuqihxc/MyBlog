@@ -35,9 +35,17 @@ const loginProc = function ({originalRequest, originalResponse}) {
     url: url.resolve(proxyurl, '/api/auth/login'),
     json: originalRequest.body
   }, function (error, response, body) {
+    if (error & error.code === 'ECONNREFUSED') {
+      console.error('无法连接到后端服务，请检查后端程序是否启动。')
+      originalResponse.statusCode = 503
+      originalResponse.json({message: 'Service Unabailable.', data: null})
+      originalResponse.end()
+      return
+    }
+
     if (response.statusCode === 401) {
       originalRequest.session.checkForBots = true
-      originalResponse.json({succeeded: false, message: '登录失败。'})
+      response.pipe(originalResponse)
       return
     }
 

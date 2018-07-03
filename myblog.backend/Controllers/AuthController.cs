@@ -13,6 +13,7 @@ using MyBlog.App;
 using MyBlog.Common;
 using Microsoft.Extensions.Caching.Memory;
 using MyBlog.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MyBlog.Controllers
 {
@@ -37,7 +38,12 @@ namespace MyBlog.Controllers
         {
             var user = await _AuthApp.Verify(Params.UserName, Params.Password);
             if (user == null)
-                return Challenge();
+            {
+                return new ObjectResult(new ExceptionModel{ Message = "用户名或密码错误。"})
+                {
+                    StatusCode = StatusCodes.Status401Unauthorized
+                };
+            }
 
             var timeNow = DateTime.UtcNow;
 
