@@ -5,7 +5,7 @@
   "author": "liyuqihxc <liyuqihxc@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env PROXY_URL=http://127.0.0.1:18089 backpack dev",
+    "dev": "cross-env PROXY_URL=http://127.0.0.1:18089 backpack dev --inspect",
     "dev-debug": "node --inspect node_modules/nuxt/bin/nuxt",
     "build": "nuxt build && backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js",

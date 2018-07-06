@@ -74,7 +74,10 @@ export default {
     }
   },
   beforeDestroy () {
-    document.getElementById('recaptchaScript').remove()
+    let script = document.getElementById('recaptchaScript')
+    if (script) {
+      script.remove()
+    }
   },
   methods: {
     handleReset2 () {
@@ -95,7 +98,6 @@ export default {
             g_recaptcha_response: grecaptcha
           }
           _This.$store.dispatch(muta.AC_LOGIN, loginParams).then(function () {
-            _This.logining = false
             if (_This.logined === true) {
               window.location.reload(true)
             } else if (window.grecaptcha) {
@@ -105,6 +107,8 @@ export default {
               // js未加载
               _This.load_reCAPTCHA()
             }
+          }).finally(function () {
+            _This.logining = false
           })
         } else {
           console.log('error submit!!')

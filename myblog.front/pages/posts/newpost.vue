@@ -1,6 +1,27 @@
 <template>
   <div class="content-editor">
-      <showdown-editor v-if="allTags && allCategories" :tags="allTags" :categories="allCategories" v-model="article" @save="savePost"></showdown-editor>
+    <showdown-editor v-if="allTags && allCategories" v-model="article" @save="savePost" @publish="publishPost">
+      <template slot="category">
+        <el-select v-model="article.category" size="small" placeholder="请选择分类" style="margin-right:5px">
+        <el-option
+          v-for="item in allCategories"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key">
+        </el-option>
+      </el-select>
+      </template>
+      <template slot="tags">
+        <el-select :multiple-limit="3" :remote-method="filterTags" v-model="article.tags" style="margin-right:5px" multiple filterable remote reserve-keyword size="small" placeholder="请选择标签">
+          <el-option
+            v-for="item in tags"
+            :key="item.key"
+            :label="item.label"
+            :value="item.key">
+          </el-option>
+        </el-select>
+      </template>
+    </showdown-editor>
   </div>
 </template>
 
@@ -42,6 +63,11 @@ export default {
       }).catch(function (error) {
         console.error(error)
       })
+    },
+    publishPost () {
+
+    },
+    filterTags (query) {
     }
   }
 }

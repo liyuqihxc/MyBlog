@@ -11,7 +11,7 @@ namespace MyBlog.Common
 {
     internal static class Extensions
     {
-        // <summary>
+        /// <summary>
         /// Retrieve the raw body as a string from the Request.Body stream
         /// </summary>
         /// <param name="request">Request instance to apply to</param>

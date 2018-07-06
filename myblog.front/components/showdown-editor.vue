@@ -9,32 +9,24 @@
         <el-button @click="togglePreview" v-if="preview"><fa-icon :icon="['far','file-alt']"/>&nbsp;编辑</el-button>
         <el-button @click="riseSaveEvent"><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
       </el-button-group>
-      <el-select style="margin-right:5px" v-model="value.category" size="small" placeholder="请选择分类">
-        <el-option
-          v-for="item in categories"
-          :key="item.key"
-          :label="item.label"
-          :value="item.key">
-        </el-option>
-      </el-select>
-      <el-select style="margin-right:5px" multiple filterable remote reserve-keyword :multiple-limit="3" :remote-method="filterTags" v-model="value.tags" size="small" placeholder="请选择标签">
-        <el-option
-          v-for="item in tags"
-          :key="item.key"
-          :label="item.label"
-          :value="item.key">
-        </el-option>
-      </el-select>
+      <slot name="category">
+        <el-select placeholder="请选择分类" style="margin-right:5px"></el-select>
+      </slot>
+      <slot name="tags">
+        <el-select style="margin-right:5px" multiple filterable remote reserve-keyword size="small" placeholder="请选择标签"></el-select>
+      </slot>
+      
+      
       <el-button-group style="margin-right:5px">
-        <el-button><fa-icon :icon="['far','paper-plane']"/>&nbsp;发布</el-button>
+        <el-button @click="risePublishEvent"><fa-icon :icon="['far','paper-plane']"/>&nbsp;发布</el-button>
       </el-button-group>
-      <el-dropdown style="float:right">
+      <el-dropdown @command="handleHelp" style="float:right">
         <el-button>
           &nbsp;&nbsp;帮助&nbsp;&nbsp;<i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item><fa-icon :icon="['fas','code']"/>&nbsp;Markdown</el-dropdown-item>
-          <el-dropdown-item>&nbsp;<fa-icon :icon="['far','lightbulb']"/>&nbsp;&nbsp;LaTeX</el-dropdown-item>
+          <el-dropdown-item command="md"><fa-icon :icon="['fas','code']"/>&nbsp;Markdown</el-dropdown-item>
+          <el-dropdown-item command="latex">&nbsp;<fa-icon :icon="['far','lightbulb']"/>&nbsp;&nbsp;LaTeX</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -81,11 +73,21 @@ export default {
     riseSaveEvent () {
       this.$emit('save', this.value)
     },
-    filterTags (query) {
+    risePublishEvent () {
+      this.$emit('publish', this.value)
     },
     togglePreview () {
       let _This = this
       _This.preview = !_This.preview
+    },
+    handleHelp (cmd) {
+      switch (cmd) {
+        case 'md':
+          window.open('https://github.com/showdownjs/showdown/wiki/Showdown\'s-Markdown-syntax')
+          break
+        case 'latex':
+          break
+      }
     }
   }
 }
