@@ -64,6 +64,7 @@ export default {
   watch: {
     value: {
       handler (New, Old) {
+        this.value.updated = true
         this.$emit('input', New)
       },
       deep: true

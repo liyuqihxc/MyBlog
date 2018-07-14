@@ -83,9 +83,9 @@ namespace MyBlog.App
             });
         }
 
-        public Task AddNewArticle(string title, int category, int[] tags, string content, string UserName)
+        public Task<int> AddNewArticle(string title, int category, int[] tags, string content, bool Published, string UserName)
         {
-            return Task.Factory.StartNew(() =>
+            return Task<int>.Factory.StartNew(() =>
             {
                 if (!_CategoriesRepository.Any(category))
                     throw new ArgumentException("指定的Category不存在。");
@@ -125,6 +125,7 @@ namespace MyBlog.App
                         }
 
                         trans.Commit();
+                        return post.ID;
                     }
                     catch
                     {
@@ -132,6 +133,22 @@ namespace MyBlog.App
                         throw;
                     }
                 }
+            });
+        }
+
+        public Task UpdateArticle(int PostID, string title, int category, int[] tags, string content, bool Published)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                var article = _ArticlesRepository.First(m => m.ID == PostID);
+
+                article.Title = title;
+                article.CategoryID = category;
+                article.ModifiedData = DateTime.UtcNow;
+                article.Content = content;
+                article.Published = Published;
+
+                _ArticlesRepository.Update(article);
             });
         }
 

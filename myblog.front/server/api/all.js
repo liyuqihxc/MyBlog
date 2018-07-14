@@ -7,8 +7,6 @@ const router = Router()
 const proxyurl = process.env.PROXY_URL
 
 router.all('/*', function (req, res) {
-  // var _This = this
-
   var headers = req.headers
   if (req.session.access_token) {
     headers['Authorization'] = 'Bearer ' + req.session.access_token

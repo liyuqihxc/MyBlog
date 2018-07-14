@@ -49,11 +49,20 @@ namespace MyBlog.Controllers
 
         [Authorize]
         [HttpPost, Route("addnew")]
-        public async Task<IActionResult> SaveNewPost([FromBody]NewArticleModel newPost)
+        public async Task<IActionResult> SaveNewPost(int? PostID, bool Published, [FromBody]NewArticleModel newPost)
         {
             string UserName = User.Identity.Name;
-            await _ArticlesApp.AddNewArticle(newPost.Title, newPost.Category, newPost.Tags, newPost.Content, "admin");
-            return Ok("保存成功。");
+            if (newPost != null && PostID == null)
+            {
+                int ID = await _ArticlesApp.AddNewArticle(newPost.Title, newPost.Category, newPost.Tags, newPost.Content, Published, UserName);
+                return Ok(new { Message = "保存成功。", ID });
+            }
+            else if (PostID != null)
+            {
+                await _ArticlesApp.UpdateArticle(PostID.Value, newPost.Title, newPost.Category, newPost.Tags, newPost.Content, Published);
+                return Ok(new { Message = "保存成功。" });
+            }
+            return BadRequest();
         }
 
         [HttpGet, Route("loadarticle")]

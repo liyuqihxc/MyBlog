@@ -37,10 +37,12 @@ export default {
   data () {
     return {
       article: {
+        id: '',
         title: '',
         content: '',
         tags: [],
-        category: undefined
+        category: undefined,
+        updated: false // content 内容是否更改
       }
     }
   },
@@ -53,6 +55,7 @@ export default {
   }),
   methods: {
     savePost () {
+      let _This = this
       articlesApi.addNewPost(
         this.article.title,
         this.article.tags,
@@ -60,6 +63,10 @@ export default {
         this.article.content
       ).then(function (result) {
         alert(result.message)
+        if (result.ID) {
+          _This.id = result.ID
+          // _This.$router.push('/posts/viewpost/'.concat(result.ID))
+        }
       }).catch(function (error) {
         console.error(error)
       })
