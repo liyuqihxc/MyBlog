@@ -17,7 +17,7 @@ namespace MyBlog.Repository
             {
                 UserEntity user = new UserEntity
                 {
-                    Name = "admin",
+                    UserName = "admin",
                     NickName = "admin",
                     Password = Utility.Md5Hash("963852"),
                     SecurityStamp = Utility.GenerateSecurityStamp()

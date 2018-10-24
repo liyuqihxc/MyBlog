@@ -16,19 +16,19 @@ namespace MyBlog.App
     public class ArticlesApp
     {
         private IMapper _Mapper { get; }
-        private IArticlesRepository _ArticlesRepository { get; }
-        private ITagsRepository _TagsRepository { get; }
-        private ICategoriesRepository _CategoriesRepository { get; }
-        private IPostTagRelationsRepository _PostTagRelationsRepository { get; }
-        private IUserRepository _UserRepository { get; }
+        private IBaseRepository<PostEntity> _ArticlesRepository { get; }
+        private IBaseRepository<TagEntity> _TagsRepository { get; }
+        private IBaseRepository<CategoryEntity> _CategoriesRepository { get; }
+        private IBaseRepository<PostTagRelationEntity> _PostTagRelationsRepository { get; }
+        private IBaseRepository<UserEntity> _UserRepository { get; }
 
         public ArticlesApp(
             IMapper mapper,
-            IArticlesRepository articlesRepository,
-            ITagsRepository tagsRepository,
-            ICategoriesRepository categoriesRepository,
-            IPostTagRelationsRepository postTagRelationsRepository,
-            IUserRepository userRepository
+            IBaseRepository<PostEntity> articlesRepository,
+            IBaseRepository<TagEntity> tagsRepository,
+            IBaseRepository<CategoryEntity> categoriesRepository,
+            IBaseRepository<PostTagRelationEntity> postTagRelationsRepository,
+            IBaseRepository<UserEntity> userRepository
         )
         {
             _Mapper = mapper;
@@ -67,23 +67,17 @@ namespace MyBlog.App
             });
         }
 
-        public Task<IEnumerable<CategoryEntity>> GetAllCategories()
+        public async Task<IEnumerable<CategoryEntity>> GetAllCategories()
         {
-            return Task<IEnumerable<CategoryEntity>>.Factory.StartNew(() =>
-            {
-                return _CategoriesRepository.All().ToArray();
-            });
+            return await _CategoriesRepository.All().ToListAsync();
         }
 
-        public Task<IEnumerable<TagEntity>> GetAllTags()
+        public async Task<IEnumerable<TagEntity>> GetAllTags()
         {
-            return Task<IEnumerable<TagEntity>>.Factory.StartNew(() =>
-            {
-                return _TagsRepository.All().ToArray();
-            });
+            return await _TagsRepository.All().ToListAsync();
         }
 
-        public Task<int> AddNewArticle(string title, int category, int[] tags, string content, bool Published, string UserName)
+        public Task<int> AddNewArticle(string title, string category, string[] tags, string content, bool Published, string UserName)
         {
             return Task<int>.Factory.StartNew(() =>
             {
@@ -110,9 +104,9 @@ namespace MyBlog.App
                             ModifiedData = now,
                             Content = content,
                             CategoryID = category,
-                            AnnouncerID = _UserRepository.First(u => u.Name == UserName).ID
+                            AnnouncerID = _UserRepository.First(u => u.UserName == UserName).ID
                         };
-                        _ArticlesRepository.Add(post);
+                        _ArticlesRepository.InsertAsync(post);
 
                         foreach (var t in tags)
                         {
@@ -121,7 +115,7 @@ namespace MyBlog.App
                                 TagID = t,
                                 PostID = post.ID
                             };
-                            _PostTagRelationsRepository.Add(rela);
+                            _PostTagRelationsRepository.InsertAsync(rela);
                         }
 
                         trans.Commit();

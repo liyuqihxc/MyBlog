@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MyBlog.Domain.IRepository;
 
@@ -18,39 +19,37 @@ namespace MyBlog.Repository
             _DbContext = dbc;
         }
 
-        public void Add(T t)
+        public async Task<T> InsertAsync(T t)
         {
-            _DbContext.Add<T>(t);
-            _DbContext.SaveChanges();
+            var entityEntry = await _DbContext.AddAsync<T>(t);
+            return entityEntry.Entity;
         }
 
-        public bool Any(object key)
+        public Task<bool> AnyAsync(object key)
         {
-            var obj = _DbContext.Find<T>(key);
-            return obj != null;
+            return _DbContext.Set<T>().AnyAsync();
         }
 
-        public T Find(object key)
+        public Task<T> FindAsync(object key)
         {
-            return _DbContext.Find<T>(key);
+            return _DbContext.FindAsync<T>(key);
         }
 
         public void Remove(T t)
         {
-            _DbContext.Remove<T>(t);
-            _DbContext.SaveChanges();
+            _DbContext.Remove(t);
         }
 
         public void RemoveRange(IEnumerable<T> t)
         {
             _DbContext.RemoveRange(t);
-            _DbContext.SaveChanges();
         }
 
-        public void Update(T t)
+        public Task<T> UpdateAsync(T t)
         {
-            _DbContext.Update<T>(t);
-            _DbContext.SaveChanges();
+            AttachIfNot(entity);
+            _DbContext.Entry(t).State = EntityState.Modified;
+            return Task.FromResult(t);
         }
 
         public void UpdateRange(IEnumerable<T> t)

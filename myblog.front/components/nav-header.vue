@@ -54,22 +54,6 @@ export default {
       color: #FFF;
     }
   }
-
-  .el-menu {
-    .el-menu-item {
-      &:hover {
-        color: #ffd04b !important;
-        border-bottom-color: #ffd04b !important;
-        background-color: #383F42 !important;
-      }
-
-      &:focus:not(:hover), &.is-active:not(:hover) {
-        color: white !important;
-        border-bottom-color: transparent !important;
-        background-color: #383F42 !important;
-      }
-    }
-  }
 }
 </style>
 

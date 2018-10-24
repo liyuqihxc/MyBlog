@@ -1,27 +1,6 @@
 <template>
   <div class="content-editor">
-    <showdown-editor v-if="allTags && allCategories" v-model="article" @save="savePost" @publish="publishPost">
-      <template slot="category">
-        <el-select v-model="article.category" size="small" placeholder="请选择分类" style="margin-right:5px">
-        <el-option
-          v-for="item in allCategories"
-          :key="item.key"
-          :label="item.label"
-          :value="item.key">
-        </el-option>
-      </el-select>
-      </template>
-      <template slot="tags">
-        <el-select :multiple-limit="3" :remote-method="filterTags" v-model="article.tags" style="margin-right:5px" multiple filterable remote reserve-keyword size="small" placeholder="请选择标签">
-          <el-option
-            v-for="item in tags"
-            :key="item.key"
-            :label="item.label"
-            :value="item.key">
-          </el-option>
-        </el-select>
-      </template>
-    </showdown-editor>
+    <showdown-editor v-if="allTags && allCategories" v-model="article" :categories="allCategories" :tags="allTags" @save="savePost" @publish="publishPost"></showdown-editor>
   </div>
 </template>
 
@@ -32,7 +11,10 @@ import { articles as articlesApi } from '@/api'
 
 export default {
   head: {
-    title: '添加新文章 - 石榴骑士的小站'
+    title: '添加新文章',
+    meta: [
+      { hid: 'description', name: 'description', content: '创建博文' }
+    ]
   },
   data () {
     return {
@@ -73,8 +55,6 @@ export default {
     },
     publishPost () {
 
-    },
-    filterTags (query) {
     }
   }
 }

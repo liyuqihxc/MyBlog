@@ -10,21 +10,21 @@ namespace MyBlog.Domain.IRepository
     public interface IBaseRepository<T>
         where T : class
     {
-        void Add(T t);
+        Task<T> InsertAsync(T t);
 
-        bool Any(object key);
+        Task<bool> Any(object key);
 
-        bool Any(Expression<Func<T, bool>> predicate);
+        Task<bool> Any(Expression<Func<T, bool>> predicate);
 
         IQueryable<T> All();
 
         IDbContextTransaction BeginTransaction();
 
-        T Find(object key);
+        Task<T> FindAsync(object key);
 
-        T FirstOrDefault(Expression<Func<T, bool>> predicate);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
 
-        T First(Expression<Func<T, bool>> predicate);
+        Task<T> FirstAsync(Expression<Func<T, bool>> predicate);
 
         IQueryable<T> Where(Expression<Func<T, bool>> predicate);
 
@@ -32,9 +32,9 @@ namespace MyBlog.Domain.IRepository
 
         void RemoveRange(IEnumerable<T> t);
 
-        void Update(T t);
+        Task<T> UpdateAsync(T t);
 
-        void UpdateRange(IEnumerable<T> t);
+        Task UpdateRangeAsync(IEnumerable<T> t);
 
         IQueryable<T> Except(IQueryable<T> second);
 

@@ -22,7 +22,7 @@ namespace MyBlog.App
         {
             return Task<UserEntity>.Factory.StartNew(() => 
             {
-                return _UserRepository.FirstOrDefault(u => u.Name == username && u.Password == Utility.Md5Hash(password));
+                return _UserRepository.FirstOrDefault(u => u.UserName == username && u.Password == Utility.Md5Hash(password));
             });
         }
 

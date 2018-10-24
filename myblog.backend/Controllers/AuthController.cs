@@ -56,8 +56,8 @@ namespace MyBlog.Controllers
             jti(JWT ID)：是JWT的唯一标识。*/
             IEnumerable<Claim> claims = new[]
             {
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, user.SecurityStamp),
                 new Claim(JwtRegisteredClaimNames.Iat, timeNow.ToUnixTimestamp().ToString(), ClaimValueTypes.Integer64),
             };

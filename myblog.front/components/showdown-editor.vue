@@ -9,12 +9,22 @@
         <el-button @click="togglePreview" v-if="preview"><fa-icon :icon="['far','file-alt']"/>&nbsp;编辑</el-button>
         <el-button @click="riseSaveEvent"><fa-icon :icon="['far','save']"/>&nbsp;保存</el-button>
       </el-button-group>
-      <slot name="category">
-        <el-select placeholder="请选择分类" style="margin-right:5px"></el-select>
-      </slot>
-      <slot name="tags">
-        <el-select style="margin-right:5px" multiple filterable remote reserve-keyword size="small" placeholder="请选择标签"></el-select>
-      </slot>
+      <el-select placeholder="请选择分类" style="margin-right:5px">
+        <el-option
+          v-for="item in categories"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key">
+        </el-option>
+      </el-select>
+      <el-select style="margin-right:5px" :multiple-limit="3" multiple allow-create filterable reserve-keyword size="small" placeholder="请选择标签">
+        <el-option
+          v-for="item in tags"
+          :key="item.key"
+          :label="item.label"
+          :value="item.key">
+        </el-option>
+      </el-select>
       
       
       <el-button-group style="margin-right:5px">
@@ -46,11 +56,11 @@ import '@/assets/scss/article.scss'
 const Converter = new showdown.Converter()
 
 export default {
-  props: [
-    'tags',
-    'categories',
-    'value'
-  ],
+  props: {
+    tags: Array,
+    categories: Array,
+    value: Object
+  },
   data () {
     return {
       preview: false

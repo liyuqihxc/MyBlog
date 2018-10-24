@@ -102,6 +102,26 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.el-menu-item {
+  &:hover {
+    > * {
+      color: inherit !important;
+    }
+    color: #ffd04b !important;
+    border-bottom-color: transparent !important;
+    background-color: #383F42;
+  }
+
+  &:focus:not(:hover), &.is-active:not(:hover) {
+    color: white !important;
+    border-bottom-color: transparent !important;
+    background-color: #383F42 !important;
+  }
+}
+</style>
+
+
 <style lang="scss">
 html, body {
   height: 100%;

@@ -63,7 +63,10 @@ const Converter = new showdown.Converter()
 export default {
   head () {
     return {
-      title: this.article.title
+      title: this.article.title,
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: '' }
+      ]
     }
   },
   async asyncData ({ route }) {
